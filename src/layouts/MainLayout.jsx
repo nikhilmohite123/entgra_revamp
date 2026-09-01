@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Menu, LayoutDashboard, Users, Settings, CreditCard, 
   Activity, BarChart3, Bell, Shield, Database, Cpu, Calendar, Code,
-  LogOut, User as UserIcon
+  LogOut
 } from 'lucide-react';
 
 const MODULES = [
@@ -24,9 +24,37 @@ const MODULES = [
 export default function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Find active module name
   const activeModule = MODULES.find(m => location.pathname.startsWith(m.path)) || { name: 'Dashboard' };
+
+  // Parse authenticated user details dynamically
+  const uid = localStorage.getItem('uid') || 'admin';
+  const authUserString = localStorage.getItem('auth_user');
+  let displayName = uid.split('@')[0];
+  let role = 'User';
+
+  if (authUserString) {
+    try {
+      const authUser = JSON.parse(authUserString);
+      displayName = authUser.username || displayName;
+      role = authUser.role || role;
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    const isAdmin = localStorage.getItem('isAdmin');
+    if (isAdmin === '1') {
+      role = 'Administrator';
+    }
+  }
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    navigate('/auth/login', { replace: true });
+  };
 
   return (
     <div className="layout-wrapper">
@@ -70,12 +98,16 @@ export default function MainLayout() {
           })}
         </ul>
 
-        {/* Sidebar Footer */}
+        {/* Sidebar Footer - Handles clear session logouts */}
         <div className="sidebar-header" style={{ borderTop: '1px solid var(--border-glass)', borderBottom: 'none' }}>
-          <NavLink to="/auth/login" className="sidebar-link" style={{ width: '100%' }}>
+          <button 
+            onClick={handleLogout} 
+            className="sidebar-link" 
+            style={{ width: '100%', background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+          >
             <LogOut size={18} style={{ color: 'var(--danger)' }} />
-            {!collapsed && <span className="sidebar-link-text" style={{ color: 'var(--danger)' }}>Sign Out</span>}
-          </NavLink>
+            {!collapsed && <span className="sidebar-link-text" style={{ color: 'var(--danger)', marginLeft: '0.75rem' }}>Sign Out</span>}
+          </button>
         </div>
       </aside>
 
@@ -96,10 +128,10 @@ export default function MainLayout() {
           
           <div className="nav-actions">
             <div className="user-profile">
-              <div className="user-avatar">AG</div>
+              <div className="user-avatar">{displayName.substring(0, 2).toUpperCase()}</div>
               <div className="user-info">
-                <span className="user-name">Antigravity User</span>
-                <span className="user-role">Administrator</span>
+                <span className="user-name">{displayName}</span>
+                <span className="user-role">{role}</span>
               </div>
             </div>
           </div>
