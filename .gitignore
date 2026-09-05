@@ -42,3 +42,6 @@ coverage/
 # Misc
 *.swp
 *.swo
+
+#Lagecy
+src/modules/Quality-Process/Lagecy-Folder
