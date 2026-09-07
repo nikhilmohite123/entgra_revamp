@@ -9,6 +9,7 @@ import Main from '../../pages/main';
 // Import only existing module routes
 import { Module1Routes } from '../../modules/module1';
 import { IdeahubRoutes } from '../../modules/idea-hub';
+import { QualityProcessRoutes } from '../../modules/Quality-Process/routes/QualityProcessRoutes';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -32,8 +33,8 @@ export default function AppRoutes() {
 
         {/* Idea Hub Standalone Portal Routes */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
- 
-     
+
+
 
         {/* Main Layout Wrapping Modules */}
         <Route path="/" element={<MainLayout />}>
@@ -41,6 +42,7 @@ export default function AppRoutes() {
           <Route path="module1/*" element={<Module1Routes />} />
           {/* Future module subroutes can be nested here */}
           <Route path="idea_hub/*" element={<IdeahubRoutes />} />
+          <Route path="quality_process/*" element={<QualityProcessRoutes />} />
         </Route>
       </Route>
 
