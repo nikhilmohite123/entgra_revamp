@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
-import { Mail, Lock, ChevronRight } from 'lucide-react';
+import { Mail, Lock, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import styles from './Login.module.css';
 
 export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('admin123');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -182,6 +184,10 @@ export default function Login() {
                 alt="Logo" 
                 className={styles.logo} 
               />
+              <h2 className={styles.welcomeTitle}>
+                <span className={styles.welcomeBlue}>Welcome</span> <span className={styles.welcomeGreen}>Back!</span>
+              </h2>
+              <p className={styles.welcomeSubtitle}>Sign in to continue to your account</p>
             </div>
 
             {/* Error Message */}
@@ -212,13 +218,41 @@ export default function Login() {
                   <Lock size={18} />
                 </span>
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"} 
                   className={styles.fieldInput} 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter Password"
                   required
                 />
+                <button 
+                  type="button" 
+                  className={styles.passwordToggleBtn}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+
+              {/* Remember Me Checkbox */}
+              <div className={styles.rememberRow}>
+                <label className={styles.rememberLabel}>
+                  <input 
+                    type="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className={styles.rememberCheckboxInput}
+                  />
+                  <span className={styles.customCheckbox}>
+                    {rememberMe && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    )}
+                  </span>
+                  <span className={styles.rememberText}>Remember me</span>
+                </label>
               </div>
 
               {/* Submit button - uses gradient representing brand colors */}
@@ -233,7 +267,7 @@ export default function Login() {
 
             </form>
 
-            <div style={{ marginTop: '1.25rem', padding: '0.75rem', borderRadius: '6px', backgroundColor: 'var(--bg-primary)', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+            <div style={{ marginTop: '1.25rem', padding: '0.75rem', borderRadius: '6px', backgroundColor: 'rgba(248, 250, 252, 0.85)', border: '1px solid rgba(226, 232, 240, 0.8)', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
               System credentials: <code style={{ fontWeight: 'bold' }}>admin</code> / <code style={{ fontWeight: 'bold' }}>admin123</code>
             </div>
 

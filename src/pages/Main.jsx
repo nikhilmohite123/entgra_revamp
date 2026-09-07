@@ -56,6 +56,37 @@ export default function Main() {
   
   // Verify session on component mount
   const uid = localStorage.getItem('uid') || 'admin@eplglobal.com';
+  const authUserString = localStorage.getItem('auth_user');
+  let displayName = 'Shaikh Muzammil';
+  let role = 'Administrator';
+
+  if (authUserString) {
+    try {
+      const authUser = JSON.parse(authUserString);
+      if (authUser.name || authUser.username) {
+        displayName = authUser.name || authUser.username;
+      }
+      if (authUser.role) {
+        role = authUser.role;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else if (uid) {
+    const rawName = uid.split('@')[0];
+    if (rawName !== 'admin') {
+      displayName = rawName.replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+  }
+
+  const getInitials = (name) => {
+    if (!name) return 'SM';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
 
   useEffect(() => {
     // If no authenticated user, redirect back to login
@@ -129,35 +160,24 @@ export default function Main() {
       {/* 1. Header Section */}
       <header className={styles.portalHeader}>
         <div className={styles.portalBrand}>
-          <img src="/img/Logo1-EpConnect.jpg" alt="EP Connect Logo" className={styles.portalLogoImg} />
+          <img src="https://www.eplglobal.com/wp-content/uploads/2024/06/main_logo.svg" alt="EPL Global Logo" className={styles.portalLogoImg} />
           <div>
-            <h1 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)', margin: 0 }}>ENTGRA</h1>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>EPL Business Workflow Systems</span>
+            <h1 className={styles.portalBrandTitle}>ENTGRA</h1>
+            <span className={styles.portalBrandSubtitle}>EPL Business Workflow Systems</span>
           </div>
         </div>
 
-        {/* Mobile menu toggle */}
-        <button 
-          className="d-lg-none"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          style={{ background: 'none', border: '1px solid var(--border-glass)', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer' }}
-        >
-          <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: '#333', margin: '4px 0' }}></span>
-          <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: '#333', margin: '4px 0' }}></span>
-          <span style={{ display: 'block', width: '20px', height: '2px', backgroundColor: '#333', margin: '4px 0' }}></span>
-        </button>
-
         {/* Header Navigation Link Items */}
-        <nav className={`${styles.portalNavBar} ${mobileMenuOpen ? styles.open : ''}`}>
-          <button onClick={handleDMSSubmit} className="btn" style={{ background: '#EAF2FC', border: 'none', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)', cursor: 'pointer' }}>
+        <nav className={styles.portalNavBar}>
+          <button onClick={handleDMSSubmit} className={styles.navBtn}>
             Document Management System
           </button>
           
-          <a href="/bpmn/idea_discussion_list" className="btn" style={{ background: '#EAF2FC', border: 'none', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none' }}>
+          <a href="/bpmn/idea_discussion_list" className={styles.navBtn}>
             War on Waste - Idea Portal
           </a>
 
-          <a href="/bpmn/epl-current-year-survey" className="btn" style={{ background: '#EAF2FC', border: 'none', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none' }}>
+          <a href="/bpmn/epl-current-year-survey" className={styles.navBtn}>
             Survey on Return to Work
           </a>
 
@@ -167,12 +187,12 @@ export default function Main() {
             onMouseEnter={() => setActiveDropdown('activities')}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className="btn" style={{ background: '#EAF2FC', border: 'none', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+            <button className={styles.navBtn}>
               Activities <ChevronDown size={14} />
             </button>
             
             {activeDropdown === 'activities' && (
-              <div style={{ position: 'absolute', top: '100%', right: 0, width: '240px', background: '#FFFFFF', border: '1px solid var(--border-glass)', borderRadius: '8px', boxShadow: '0 4px 15px rgba(6, 43, 103, 0.08)', zIndex: 100, padding: '0.5rem 0' }}>
+              <div className={styles.activitiesDropdown}>
                 <a href="/bpmn/dms_access_ids" className={styles.dropdownHoverItem}>DMS Access Portal</a>
                 <a href="/bpmn/speakUp_list" className={styles.dropdownHoverItem}>Speak Up List</a>
                 <a href="/bpmn/194q_dash" className={styles.dropdownHoverItem}>194Q Dashboard</a>
@@ -188,104 +208,110 @@ export default function Main() {
 
         {/* User profile with logout dropdown */}
         <div 
-          style={{ position: 'relative' }}
+          className={styles.profileSection}
           onMouseEnter={() => setActiveDropdown('profile')}
           onMouseLeave={() => setActiveDropdown(null)}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', border: '1px solid var(--border-glass)', padding: '6px 12px', borderRadius: '50px', background: 'var(--bg-tertiary)' }}>
-            <User size={16} color="var(--primary)" />
-            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--primary)' }}>{uid.split('@')[0]}</span>
-            <ChevronDown size={14} color="var(--primary)" />
-          </div>
-
-          {activeDropdown === 'profile' && (
-            <div style={{ position: 'absolute', top: '100%', right: 0, width: '150px', background: '#FFFFFF', border: '1px solid var(--border-glass)', borderRadius: '8px', boxShadow: '0 4px 15px rgba(6, 43, 103, 0.08)', zIndex: 100, padding: '0.5rem 0' }}>
-              <button onClick={handleLogout} style={{ width: '100%', background: 'none', border: 'none', padding: '0.5rem 1rem', fontSize: '0.8rem', color: 'var(--danger)', display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', textAlign: 'left' }}>
-                <LogOut size={14} /> Log out
-              </button>
+          <div className={styles.profileDivider}></div>
+          <div className={styles.profileBox}>
+            <div className={styles.avatarCircle}>
+              {getInitials(displayName)}
             </div>
-          )}
+            <div className={styles.profileMeta}>
+              <span className={styles.profileName}>{displayName}</span>
+              <span className={styles.profileRole}>{role}</span>
+            </div>
+            <ChevronDown size={14} className={styles.profileChevron} />
+
+            {activeDropdown === 'profile' && (
+              <div className={styles.profileDropdown}>
+                <button onClick={handleLogout} className={styles.logoutBtn}>
+                  <LogOut size={14} /> Log out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
       {/* 2. Main Portal Title & Toolbar Section */}
-      <section style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+      <section style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--primary)', margin: 0 }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--primary)', margin: 0 }}>
             Business Process & Document Management System
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Access all verified process units, documents, and compliance tracking cards below.
           </p>
         </div>
 
-        {/* Toolbar: Search input and toggle options */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFFFF', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-glass)' }}>
-          <div style={{ position: 'relative', width: '100%', maxWidth: '360px' }}>
-            <span style={{ position: 'absolute', top: '12px', left: 14, color: 'var(--text-secondary)' }}>
+        {/* Toolbar: Search input and toggle options on right side in one line */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap', whiteSpace: 'nowrap', backgroundColor: '#FFFFFF', padding: '0.5rem 1rem', borderRadius: '50px', border: '1px solid var(--border-glass)' }}>
+          <div style={{ position: 'relative', width: '220px', flexShrink: 0 }}>
+            <span style={{ position: 'absolute', top: '9px', left: 14, color: 'var(--text-secondary)' }}>
               <Search size={16} />
             </span>
             <input 
               type="text" 
-              placeholder="Search business processes..."
+              placeholder="Search processes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: '100%', padding: '8px 12px 8px 38px', borderRadius: '50px', border: '1px solid var(--border-glass)', outline: 'none', fontSize: '0.85rem' }}
+              style={{ width: '100%', padding: '6px 12px 6px 36px', borderRadius: '50px', border: '1px solid var(--border-glass)', outline: 'none', fontSize: '0.825rem' }}
             />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Active Modules ({filteredActive.length})</span>
-            <button 
-              onClick={() => setShowAll(!showAll)}
-              className="btn"
-              style={{
-                backgroundColor: showAll ? 'var(--primary)' : '#FFFFFF',
-                color: showAll ? '#FFFFFF' : 'var(--primary)',
-                border: '1px solid var(--primary)',
-                padding: '8px 16px',
-                borderRadius: '50px',
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: '0.2s'
-              }}
-            >
-              {showAll ? 'Hide Inactive Processes' : 'Show All Processes'}
-            </button>
-          </div>
+          <span style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', flexShrink: 0 }}>
+            Active Modules ({filteredActive.length})
+          </span>
+
+          <button 
+            onClick={() => setShowAll(!showAll)}
+            className="btn"
+            style={{
+              backgroundColor: showAll ? 'var(--primary)' : '#FFFFFF',
+              color: showAll ? '#FFFFFF' : 'var(--primary)',
+              border: '1px solid var(--primary)',
+              padding: '6px 16px',
+              borderRadius: '50px',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              transition: '0.2s'
+            }}
+          >
+            {showAll ? 'Hide Inactive' : 'Show All'}
+          </button>
         </div>
       </section>
 
       {/* 3. Cards Grid */}
       <main style={{ marginTop: '1.5rem', flex: 1 }}>
-        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <CheckCircle size={16} color="var(--secondary)" /> Active Operations
-        </h3>
         
         {/* Active Modules Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(265px, 1fr))', gap: '1.25rem' }}>
           {filteredActive.map((mod) => {
             const IconComponent = mod.icon;
             
             if (mod.isSplit) {
               // Specialized HMP & GMP double-link card
               return (
-                <div key={mod.id} className={styles.portalCard} style={{ borderTop: `4px solid ${mod.color}`, padding: '1.25rem', height: '185px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ backgroundColor: 'var(--bg-primary)', padding: '8px', borderRadius: '8px', color: mod.color }}>
-                      <IconComponent size={22} />
-                    </div>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>{mod.name}</span>
+                <div key={mod.id} className={styles.portalCard} style={{ padding: '1rem', minHeight: '140px', display: 'flex', flexDirection: 'row', gap: '14px', alignItems: 'center' }}>
+                  <div style={{ backgroundColor: 'var(--bg-primary)', padding: '10px', borderRadius: '10px', color: mod.color, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <IconComponent size={28} />
                   </div>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '8px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
-                  <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
-                    <a href={mod.path1} target="_blank" rel="noreferrer" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--primary-light)', color: 'var(--primary)', padding: '6px', fontSize: '0.75rem', fontWeight: 700, borderRadius: '6px', textAlign: 'center' }}>
-                      Access HMP
-                    </a>
-                    <a href={mod.path2} target="_blank" rel="noreferrer" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--primary-light)', color: 'var(--primary)', padding: '6px', fontSize: '0.75rem', fontWeight: 700, borderRadius: '6px', textAlign: 'center' }}>
-                      Access GMP
-                    </a>
+                  <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between', gap: '4px' }}>
+                    <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)' }}>{mod.name}</span>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '2px 0 6px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <a href={mod.path1} target="_blank" rel="noreferrer" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--primary-light)', color: 'var(--primary)', padding: '5px', fontSize: '0.75rem', fontWeight: 700, borderRadius: '6px', textAlign: 'center' }}>
+                        Access HMP
+                      </a>
+                      <a href={mod.path2} target="_blank" rel="noreferrer" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--primary-light)', color: 'var(--primary)', padding: '6px', fontSize: '0.75rem', fontWeight: 700, borderRadius: '6px', textAlign: 'center' }}>
+                        Access GMP
+                      </a>
+                    </div>
                   </div>
                 </div>
               );
@@ -293,17 +319,17 @@ export default function Main() {
 
             return (
               <a key={mod.id} href={mod.path} style={{ textDecoration: 'none' }}>
-                <div className={styles.portalCard} style={{ borderTop: `4px solid ${mod.color}`, padding: '1.25rem', height: '185px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ backgroundColor: 'var(--bg-primary)', padding: '8px', borderRadius: '8px', color: mod.color }}>
-                      <IconComponent size={22} />
-                    </div>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>{mod.name}</span>
+                <div className={styles.portalCard} style={{ padding: '1rem', minHeight: '140px', display: 'flex', flexDirection: 'row', gap: '14px', alignItems: 'center' }}>
+                  <div style={{ backgroundColor: 'var(--bg-primary)', padding: '10px', borderRadius: '10px', color: mod.color, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <IconComponent size={28} />
                   </div>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '8px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 700, marginTop: 'auto' }}>
-                    <span>Launch console</span>
-                    <ChevronDown size={12} style={{ transform: 'rotate(-90deg)' }} />
+                  <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between', gap: '4px' }}>
+                    <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)' }}>{mod.name}</span>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: '2px 0 6px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 700 }}>
+                      <span>Launch console</span>
+                      <ChevronDown size={12} style={{ transform: 'rotate(-90deg)' }} />
+                    </div>
                   </div>
                 </div>
               </a>
@@ -323,16 +349,16 @@ export default function Main() {
                 const IconComponent = mod.icon;
                 return (
                   <a key={mod.id} href="#" onClick={handleLaunchSoon} style={{ textDecoration: 'none' }}>
-                    <div className={styles.portalCard} style={{ borderTop: `4px solid var(--text-muted)`, padding: '1.25rem', height: '185px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'rgba(255,255,255,0.7)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '8px', borderRadius: '8px', color: 'var(--text-muted)' }}>
-                          <IconComponent size={22} />
-                        </div>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{mod.name}</span>
+                    <div className={styles.portalCard} style={{ padding: '1rem', minHeight: '140px', display: 'flex', flexDirection: 'row', gap: '14px', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.7)' }}>
+                      <div style={{ backgroundColor: 'var(--bg-primary)', padding: '10px', borderRadius: '10px', color: 'var(--text-muted)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <IconComponent size={28} />
                       </div>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '8px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, marginTop: 'auto' }}>
-                        <span style={{ background: '#EAF2FC', color: 'var(--primary)', padding: '2px 8px', borderRadius: '50px', fontSize: '0.65rem' }}>Pipeline</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between', gap: '4px' }}>
+                        <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{mod.name}</span>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '2px 0 6px 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{mod.desc}</p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>
+                          <span style={{ background: '#EAF2FC', color: 'var(--primary)', padding: '2px 8px', borderRadius: '50px', fontSize: '0.65rem' }}>Pipeline</span>
+                        </div>
                       </div>
                     </div>
                   </a>
