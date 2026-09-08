@@ -10,6 +10,7 @@ import Main from '../../pages/main';
 import { Module1Routes } from '../../modules/module1';
 import { IdeahubRoutes } from '../../modules/idea-hub';
 import { QualityProcessRoutes } from '../../modules/Quality-Process/routes/QualityProcessRoutes';
+import SupplierAuthorizationPage from '../../modules/Quality-Process/modules/Supplier-Quality/pages/SupplierAuthorizationPage';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -50,6 +51,8 @@ export default function AppRoutes() {
       <Route path="/auth" element={<AuthLayout />}>
         <Route index element={<Navigate to="/auth/login" replace />} />
         <Route path="login" element={<Login />} />
+        {/* External Standalone Routes */}
+        <Route path="supplier-verification" element={<SupplierAuthorizationPage />} />
       </Route>
 
       {/* Fallback routing */}
