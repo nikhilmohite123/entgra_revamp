@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { verifySupplier } from '../../../../services/supplierQualityService';
+import { verifySupplier } from '../../../services/supplierQualityService';
 import { SUPPLIER_STATUS } from '../constants/supplierConstants';
 
 // Basic email validation regex

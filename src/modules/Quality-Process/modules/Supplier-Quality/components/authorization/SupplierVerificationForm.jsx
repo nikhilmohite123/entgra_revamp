@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Button from '../../../../../components/common/Button';
+import Button from '../../../../../../components/common/Button';
 
 const SupplierVerificationForm = memo(({ email, onChangeEmail, loading, error, onSubmit }) => {
   return (
