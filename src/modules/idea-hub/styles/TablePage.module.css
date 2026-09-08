@@ -1,0 +1,400 @@
+/* =============================================
+   Idea Hub Table Page Styles
+   ============================================= */
+
+.ideaHubContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f8fc;
+  color: #14213d;
+}
+
+.tableMain {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  flex: 1;
+}
+
+/* Category Banner */
+.catBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(6, 43, 103, 0.05);
+}
+
+.catBannerCat1 {
+  background: #eef6d6;
+  border: 1px solid #c9e28f;
+  color: #4e9624;
+}
+
+.catBannerCat2 {
+  background: #eaf2fc;
+  border: 1px solid #b8d4f6;
+  color: #062b67;
+}
+
+.catBannerCat3 {
+  background: #fdf2e9;
+  border: 1px solid #f9d5b7;
+  color: #d97706;
+}
+
+.catBannerIcon {
+  display: flex;
+  align-items: center;
+}
+
+.catBannerText {
+  display: flex;
+  flex-direction: column;
+}
+
+.catBannerTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.catBannerSub {
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+/* Topbar: Module pill, Title, Search and Country filters */
+.tableTopbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid #d9e2ef;
+}
+
+.tableTopbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modulePill {
+  background: #062b67;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tableTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #14213d;
+  margin: 0;
+}
+
+.tableTopbarRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  position: relative;
+  min-width: 200px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #718096;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.searchBox input {
+  width: 100%;
+  padding: 8px 14px 8px 32px;
+  border: 1px solid #d9e2ef;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: #14213d;
+  outline: none;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.searchBox input:focus {
+  border-color: #062b67;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(6, 43, 103, 0.1);
+}
+
+.searchSelectWrap {
+  position: relative;
+}
+
+.searchSelectWrap select {
+  appearance: none;
+  padding: 8px 32px 8px 14px;
+  border: 1px solid #d9e2ef;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: #14213d;
+  outline: none;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.searchSelectWrap select:focus {
+  border-color: #062b67;
+  background: #ffffff;
+}
+
+.selectArrow {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #718096;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.recordCount {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #718096;
+  background: #eaf2fc;
+  padding: 6px 12px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+/* Data Table Wrapper */
+.tableWrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d9e2ef;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(6, 43, 103, 0.04);
+}
+
+.tableScrollArea {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.dataTable thead th {
+  background: #062b67;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 12px 16px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border: none;
+}
+
+.dataTable tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf2f7;
+  color: #14213d;
+  vertical-align: middle;
+}
+
+.dataTable tbody tr:hover {
+  background: #f8fafc;
+}
+
+.dataTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Cell Styles */
+.cellRef {
+  font-weight: 700;
+  color: #062b67;
+  background: #eaf2fc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.15s ease;
+}
+
+.cellRef:hover {
+  background: #062b67;
+  color: #ffffff;
+}
+
+.cellTruncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 220px;
+  line-height: 1.4;
+}
+
+.cellImages {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.cellImgThumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #d9e2ef;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.cellImgThumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cellNoImg {
+  color: #a0aec0;
+}
+
+.countryBadge {
+  background: #eef6d6;
+  color: #4e9624;
+  padding: 3px 8px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  display: inline-block;
+}
+
+.subCell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.subCellVal {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.contactEmailLink {
+  color: #062b67;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.contactEmailLink:hover {
+  color: #63b52f;
+  text-decoration: underline;
+}
+
+.contactPhoneLink {
+  color: #14213d;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.contactPhoneLink:hover {
+  color: #062b67;
+  text-decoration: underline;
+}
+
+.cellPrice {
+  font-weight: 700;
+  color: #63b52f;
+}
+
+.cellDate {
+  white-space: nowrap;
+  color: #718096;
+  font-size: 0.8rem;
+}
+
+/* Action Buttons */
+.actionBtns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.btnEdit {
+  background: #eaf2fc;
+  color: #062b67;
+  border: 1px solid #b8d4f6;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnEdit:hover {
+  background: #062b67;
+  color: #ffffff;
+}
+
+.btnDel {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnDel:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Spinner / Loader */
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(6, 43, 103, 0.15);
+  border-top-color: #062b67;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

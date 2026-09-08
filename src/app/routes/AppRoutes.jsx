@@ -6,9 +6,14 @@ import AuthLayout from '../../layouts/AuthLayout';
 import Login from '../../pages/Login';
 import Main from '../../pages/main';
 
-// Import only existing module routes
-import { Module1Routes } from '../../modules/module1';
+// Import module routes
 import { IdeahubRoutes } from '../../modules/idea-hub';
+import {
+  SamplePortalRoutes,
+  SamplePortalProvider,
+  SampleListPage,
+  SamplePortalFormPage,
+} from '../../modules/sample-portal';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -32,14 +37,32 @@ export default function AppRoutes() {
 
         {/* Idea Hub Standalone Portal Routes */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
+       
+
+        {/* Sample Portal Standalone Routes */}
+        <Route
+          path="/sample_list"
+          element={
+            <SamplePortalProvider>
+              <SampleListPage />
+            </SamplePortalProvider>
+          }
+        />
+   
+        <Route
+          path="/sample_portal"
+          element={
+            <SamplePortalProvider>
+              <SamplePortalFormPage />
+            </SamplePortalProvider>
+          }
+        />
  
-     
+        <Route path="/sample-portal/*" element={<SamplePortalRoutes />} />
 
         {/* Main Layout Wrapping Modules */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/main" replace />} />
-          <Route path="module1/*" element={<Module1Routes />} />
-          {/* Future module subroutes can be nested here */}
           <Route path="idea_hub/*" element={<IdeahubRoutes />} />
         </Route>
       </Route>

@@ -1,0 +1,356 @@
+/* =============================================
+   EPL Sample Portal — Sample List Page Styles
+============================================= */
+
+.tableMain {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pill {
+  padding: 4px 14px;
+  border-radius: 100px;
+  background: #003c96;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.adminBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 100px;
+  background: #eef6d6;
+  border: 1px solid #78aa28;
+  color: #3c8c50;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.recordCount {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* Search Box */
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 28, 80, 0.07);
+  transition: all 0.2s ease;
+}
+
+.searchBox:focus-within {
+  border-color: #003c96;
+  box-shadow: 0 0 0 3px rgba(0, 60, 150, 0.1);
+}
+
+.searchIcon {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  color: #0f172a;
+  background: transparent;
+  width: 220px;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+/* Status Tabs */
+.statusTabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabBtn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabBtn:hover {
+  background: #cbd5e1;
+  color: #0f172a;
+}
+
+.tabBtn.active {
+  background: #001e55;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 30, 85, 0.25);
+}
+
+.tabCount {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+.tabBtn:not(.active) .tabCount {
+  background: rgba(0, 0, 0, 0.08);
+  color: #475569;
+}
+
+/* Table Wrapper */
+.tableWrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 980px;
+}
+
+.dataTable thead tr {
+  background: #001e55;
+}
+
+.dataTable thead th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dataTable thead th:last-child {
+  border-right: none;
+}
+
+.dataTable tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s ease;
+}
+
+.dataTable tbody tr:last-child {
+  border-bottom: none;
+}
+
+.dataTable tbody tr:hover {
+  background: #f0f4fc;
+}
+
+.dataTable tbody td {
+  padding: 13px 16px;
+  color: #334155;
+  vertical-align: middle;
+  border-right: 1px solid #f1f5f9;
+}
+
+.dataTable tbody td:last-child {
+  border-right: none;
+}
+
+/* Cell Elements */
+.cellRef {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #003c96;
+  background: #f0f4fc;
+  border: 1px solid #e6edf8;
+  border-radius: 6px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.15s ease;
+}
+
+.cellRef:hover {
+  background: #e6edf8;
+  color: #001e55;
+  transform: scale(1.02);
+}
+
+.categoryBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #f0f4fc;
+  color: #003c96;
+  border: 1px solid #e6edf8;
+  white-space: nowrap;
+}
+
+/* Status Badges */
+.statusBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusOpen {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+
+.statusClosed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* Action Buttons */
+.actionGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btnView {
+  padding: 5px 13px;
+  border-radius: 6px;
+  border: 1px solid #e6edf8;
+  background: #f0f4fc;
+  color: #003c96;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.btnView:hover {
+  background: #e6edf8;
+  color: #001e55;
+}
+
+.btnWorkflow {
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #003c96;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.btnWorkflow:hover {
+  background: #002870;
+}
+
+.btnEdit {
+  padding: 5px 13px;
+  border-radius: 6px;
+  border: 1px solid #78aa28;
+  background: #f5fae8;
+  color: #5a8a10;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.btnEdit:hover {
+  background: #eef6d6;
+  border-color: #5a8a10;
+}
+
+@media (max-width: 768px) {
+  .tableMain {
+    padding: 20px 12px 60px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbarRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .searchInput {
+    width: 150px;
+  }
+}

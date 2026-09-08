@@ -1,0 +1,255 @@
+/* =============================================
+   Idea Hub Landing Page Styles
+   ============================================= */
+
+.ideaHubContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f8fc;
+  color: #14213d;
+}
+
+.landingMain {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px;
+  flex: 1;
+}
+
+.heroText {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.heroText h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #062b67;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.accent {
+  background: linear-gradient(135deg, #062b67 0%, #3c8c50 50%, #63b52f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heroText p {
+  font-size: 0.95rem;
+  color: #718096;
+}
+
+/* Category Strip */
+.categoryStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.catBtn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 2px solid #d9e2ef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(6, 43, 103, 0.04);
+}
+
+.catBtn:hover {
+  border-color: #062b67;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(6, 43, 103, 0.08);
+}
+
+.catBtnActive {
+  border-color: #63b52f;
+  background: #fbfdf9;
+  box-shadow: 0 4px 18px rgba(99, 181, 47, 0.15);
+}
+
+.catBtnIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #eaf2fc;
+  color: #062b67;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.catBtnActive .catBtnIcon {
+  background: #63b52f;
+  color: #ffffff;
+}
+
+.catBtnText {
+  display: flex;
+  flex-direction: column;
+}
+
+.catBtnText strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #14213d;
+  line-height: 1.2;
+}
+
+.catBtnText em {
+  font-size: 0.78rem;
+  color: #718096;
+  font-style: normal;
+  margin-top: 3px;
+}
+
+/* Notice */
+.catNotice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #eaf2fc;
+  border: 1px dashed #062b67;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  color: #062b67;
+  font-size: 0.88rem;
+}
+
+.catNoticeIcon {
+  display: flex;
+  align-items: center;
+}
+
+.catSubNotice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: #eef6d6;
+  border: 1px solid #c9e28f;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  color: #4e9624;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* Module Grid */
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.moduleGridLocked {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.moduleCard {
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(6, 43, 103, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #062b67;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.moduleCard:hover {
+  border-color: #062b67;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(6, 43, 103, 0.1);
+}
+
+.moduleCard:hover::before {
+  opacity: 1;
+}
+
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #eaf2fc;
+  color: #062b67;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.cardIcon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContent h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #14213d;
+  margin-bottom: 6px;
+}
+
+.cardDesc {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.cardExamples {
+  font-size: 0.76rem;
+  color: #63b52f;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.cardArrow {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #062b67;
+  margin-top: 14px;
+  align-self: flex-end;
+  transition: transform 0.2s ease;
+}
+
+.moduleCard:hover .cardArrow {
+  transform: translateX(4px);
+  color: #63b52f;
+}

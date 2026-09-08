@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/authService';
+import { ENV } from '../config/env';
 import { Mail, Lock, ChevronRight } from 'lucide-react';
 import styles from './Login.module.css';
 
@@ -16,7 +16,7 @@ export default function Login() {
   const [isHovered, setIsHovered] = useState(false);
 
   // Handle direct sign-in logic
-  const handleSignIn = async (e) => {
+  const handleSignIn = React.useCallback(async (e) => {
     if (e) e.preventDefault();
     if (!username || !password) {
       setError('Enter username and password!');
@@ -27,78 +27,74 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const baseUrl = "http://192.168.1.3:9003";
-      
-      const response = await fetch(`${baseUrl}/login`, {
+      const response = await fetch(`${ENV.API_BASE_URL}/bpmn/api/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({ user: username, pass: password })
-      }).catch(() => null);
+        body: JSON.stringify({
+          S_LOGIN_ID: username,
+          S_PASSWORD: password,
+        }),
+      });
 
-      if (response && response.ok) {
-        const data = await response.json();
-        console.log("Login response:", data);
+      const data = await response.json();
+      console.log("Login response:", data);
 
-        // Check backend error
-        if (data.errMess) {
-          setError('Please Contact your Technical Person!');
-          setLoading(false);
-          return;
-        }
-
-        // New API response structure
-        const user = data?.userData?.[0];
-        console.log(user,"user")
-
-        // Check user data
-        if (!user || !user.S_EMAIL_ID) {
-          setError('Invalid login credentials. Please check your username and password.');
-          setLoading(false);
-          return;
-        }
-
-        // Clear old session
-        localStorage.clear();
-
-        // Store user information
-        localStorage.setItem("uid", user.S_EMAIL_ID);
-        localStorage.setItem("empId", user.S_EMP_ID || "");
-        localStorage.setItem("empName", user.S_EMP_NAME || "");
-        localStorage.setItem("isAdmin", user.N_ISADMIN ?? 0);
-        localStorage.setItem("dept", user.S_DEPT_NAME || "");
-        localStorage.setItem("loc", user.s_location || "");
-        localStorage.setItem("loginId", user.S_LOGIN_ID || "");
-        localStorage.setItem("C_code", user.S_COMPANY_CODE || "");
-        localStorage.setItem("grpId", user.N_GROUP_AUTO_ID || "");
-
-        // Store complete authenticated user
-        localStorage.setItem(
-          "auth_user",
-          JSON.stringify({
-            username: user.S_EMP_NAME,
-            role: user.N_ISADMIN ? "Administrator" : "User",
-            email: user.S_EMAIL_ID
-          })
-        );
-
-        navigate("/main", { replace: true });
+      if (data && data.errMess) {
+        setError('Please Contact your Technical Person!');
+        setLoading(false);
         return;
       }
 
-      console.warn("Backend API offline, falling back to mock login");
-      const mockResponse = await authService.login(username, password);
-      if (mockResponse.success) {
-        localStorage.setItem('auth_user', JSON.stringify(mockResponse.user));
-        navigate('/main', { replace: true });
+      const user = data?.userData?.[0] || data?.user;
+
+      if (!user || (!user.S_EMAIL_ID && !user.email)) {
+        setError('Invalid login credentials. Please check your username and password.');
+        setLoading(false);
+        return;
       }
+
+      // Clear old session
+      localStorage.clear();
+
+      // Store user information
+      const email = user.S_EMAIL_ID || user.email || username;
+      const empId = user.S_EMP_ID || '';
+      const empName = user.S_EMP_NAME || user.username || username;
+      const isAdmin = user.N_ISADMIN ?? (user.role === 'Administrator' ? 1 : 0);
+      const dept = user.S_DEPT_NAME || '';
+      const loc = user.s_location || '';
+      const loginId = user.S_LOGIN_ID || username;
+
+      localStorage.setItem("uid", email);
+      localStorage.setItem("empId", empId);
+      localStorage.setItem("empName", empName);
+      localStorage.setItem("isAdmin", String(isAdmin));
+      localStorage.setItem("dept", dept);
+      localStorage.setItem("loc", loc);
+      localStorage.setItem("loginId", loginId);
+      localStorage.setItem("C_code", user.S_COMPANY_CODE || "");
+      localStorage.setItem("grpId", user.N_GROUP_AUTO_ID || "");
+
+      // Store complete authenticated user
+      localStorage.setItem(
+        "auth_user",
+        JSON.stringify({
+          username: empName,
+          role: isAdmin ? "Administrator" : "User",
+          email: email
+        })
+      );
+
+      navigate("/main", { replace: true });
+      return;
     } catch (err) {
       setError(err.message || 'Invalid login. Please check your username and password.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [username, password, navigate]);
 
   // Interactive 3D Perspective Tilt on Mouse Movement
   const handleMouseMove = (e) => {
@@ -134,7 +130,7 @@ export default function Login() {
     return () => {
       delete window.signIn;
     };
-  }, [username, password]);
+  }, [handleSignIn]);
 
   // Adjust viewport height for mobile browsers
   useEffect(() => {

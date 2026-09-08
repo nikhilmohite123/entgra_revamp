@@ -1,0 +1,506 @@
+/* =============================================
+   Idea Hub Form Page Styles
+   ============================================= */
+
+.ideaHubContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f8fc;
+  color: #14213d;
+}
+
+.formMain {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px;
+  flex: 1;
+}
+
+.formContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #d9e2ef;
+  padding: 36px;
+  box-shadow: 0 4px 20px rgba(6, 43, 103, 0.05);
+}
+
+.formHeader {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.moduleBadge {
+  display: inline-block;
+  background: #062b67;
+  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.formHeader h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #062b67;
+  margin-bottom: 6px;
+}
+
+.formSubtitle {
+  font-size: 0.88rem;
+  color: #718096;
+}
+
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #14213d;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.optional {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #718096;
+}
+
+.formGroup input[type='text'],
+.formGroup input[type='email'],
+.formGroup input[type='tel'],
+.formGroup input[type='url'],
+.formGroup input[type='number'],
+.formGroup textarea,
+.formGroup select {
+  padding: 10px 14px;
+  border: 1px solid #d9e2ef;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #14213d;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.formGroup input:disabled {
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+  border-color: #062b67;
+  box-shadow: 0 0 0 3px rgba(6, 43, 103, 0.1);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+.selectWrapper select {
+  width: 100%;
+  appearance: none;
+  padding-right: 32px;
+}
+
+.selectArrow {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #718096;
+  pointer-events: none;
+  font-size: 0.8rem;
+}
+
+/* Upload Zone */
+.uploadZone {
+  border: 2px dashed #b8d4f6;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  background: #fbfdff;
+  transition: all 0.2s ease;
+}
+
+.uploadZoneDragging {
+  border-color: #062b67;
+  background: #eaf2fc;
+}
+
+.uploadIcon svg {
+  width: 40px;
+  height: 40px;
+  color: #062b67;
+  margin-bottom: 8px;
+}
+
+.uploadText {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #14213d;
+}
+
+.uploadSub {
+  font-size: 0.78rem;
+  color: #718096;
+  margin: 4px 0 12px 0;
+}
+
+.uploadActions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #062b67;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uploadBtn:hover {
+  background: #042254;
+}
+
+.cameraBtn {
+  background: #63b52f;
+}
+
+.cameraBtn:hover {
+  background: #4e9624;
+}
+
+.uploadHint {
+  font-size: 0.75rem;
+  color: #a0aec0;
+  margin-top: 10px;
+}
+
+.imagePreviewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.previewItem {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #d9e2ef;
+}
+
+.previewItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previewRemove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.9);
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Commercial Details Box */
+.commercialFieldsBox {
+  background: #fbfdf9;
+  border: 1px solid #c9e28f;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.commercialSectionLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4e9624;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Contacts Section */
+.formDivider {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.formDivider span {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #062b67;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contactCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contactCardLabel {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #062b67;
+}
+
+.contactRemoveBtn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.addContactBtn {
+  background: #eaf2fc;
+  border: 1px dashed #062b67;
+  color: #062b67;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.addContactBtn:hover {
+  background: #062b67;
+  color: #ffffff;
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: #63b52f;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(99, 181, 47, 0.3);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #4e9624;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(99, 181, 47, 0.4);
+}
+
+.submitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btnLoader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.errorBanner {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Success Message */
+.successMessage {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #eef6d6;
+  color: #4e9624;
+  border: 2px solid #63b52f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.successMessage h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #062b67;
+}
+
+.successMessage p {
+  color: #718096;
+  font-size: 0.9rem;
+  max-width: 400px;
+}
+
+.backHomeBtn {
+  margin-top: 10px;
+  padding: 10px 24px;
+  background: #062b67;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backHomeBtn:hover {
+  background: #042254;
+}
+
+/* Validation Popup */
+.validationPopupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 43, 103, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+
+.validationPopup {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(6, 43, 103, 0.2);
+}
+
+.validationPopupIcon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.validationPopupTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #14213d;
+  margin-bottom: 6px;
+}
+
+.validationPopupMsg {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-bottom: 18px;
+}
+
+.validationPopupBtn {
+  padding: 8px 20px;
+  background: #062b67;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,81 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/IdeaHubHeader.module.css';
 import { CATEGORY_LABELS, MODULE_LABELS } from '../constants/ideaHubConstants';
+import { useIdeaHub } from '../context/useIdeaHub';
 import logo from '../Assests/epl-logo.png';
+import Skeleton from '../../../components/common/Skeleton/Skeleton';
 
-
-export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEntry, showBack, onBack }) {
+export default function IdeaHubHeader({
+  currentModule,
+  selectedCategory: propCategory,
+  onAddEntry,
+  showBack,
+  onBack,
+}) {
   const navigate = useNavigate();
+  const { selectedCategory: contextCategory, userProfile, authLoading } = useIdeaHub();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState({
-    name: 'User',
-    uid: '',
-    country: 'India',
-    location: 'Mumbai',
-    initials: 'US'
-  });
 
-  // Load user profile on mount
-  useEffect(() => {
-    const uid = localStorage.getItem('uid') || '';
-    const storedEmpName = localStorage.getItem('empName') || '';
-    const storedLoc = localStorage.getItem('loc') || '';
-    const storedCountry = localStorage.getItem('country') || 'India';
-
-    const formattedName = (storedEmpName || uid || 'User')
-      .replace(/[.]+/g, ' ')
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-
-    const initials = formattedName
-      .split(' ')
-      .filter(Boolean)
-      .map((part) => part[0])
-      .slice(0, 2)
-      .join('')
-      .toUpperCase() || 'US';
-
-    setUserProfile({
-      name: formattedName,
-      uid: uid ? `UID: ${uid}` : '',
-      rawUid: uid,
-      country: storedCountry,
-      location: storedLoc,
-      initials
-    });
-
-    if (uid) {
-      fetch('/bpmn/api/innovations/userdetail', {
-        headers: { 'x-uid': uid }
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res && res.success && res.data) {
-            const data = res.data;
-            const apiName = data.s_emp_name || formattedName;
-            const apiInitials = apiName
-              .split(' ')
-              .filter(Boolean)
-              .map((part) => part[0])
-              .slice(0, 2)
-              .join('')
-              .toUpperCase() || initials;
-
-            setUserProfile({
-              name: apiName,
-              uid: uid ? `UID: ${uid}` : '',
-              rawUid: uid,
-              country: data.s_country || storedCountry || '—',
-              location: data.s_location || storedLoc || '—',
-              initials: apiInitials
-            });
-          }
-        })
-        .catch(() => {
-          // ignore or keep local fallback
-        });
-    }
-  }, []);
+  const activeCategoryNum = propCategory ?? contextCategory;
 
   // Initialize Google Translate Element for multi-language translation
   useEffect(() => {
@@ -87,7 +29,7 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
             new window.google.translate.TranslateElement(
               {
                 pageLanguage: 'en',
-                autoDisplay: false
+                autoDisplay: false,
               },
               'google_translate_element'
             );
@@ -100,7 +42,6 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
 
     window.googleTranslateElementInit = initTranslate;
 
-    // Check if script is already added
     const existingScript = document.getElementById('google-translate-script');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -113,7 +54,6 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
       setTimeout(initTranslate, 300);
     }
 
-    // Interval to ensure body top is not pushed down by translate banner
     const interval = setInterval(() => {
       const bannerFrame = document.querySelector('iframe.goog-te-banner-frame');
       if (bannerFrame) {
@@ -138,7 +78,7 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const catObj = CATEGORY_LABELS[selectedCategory];
+  const catObj = activeCategoryNum ? CATEGORY_LABELS[activeCategoryNum] : null;
   const moduleCfg = currentModule ? MODULE_LABELS[currentModule] : null;
 
   return (
@@ -188,10 +128,7 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
         <div className={styles.headerNav}>
           {currentModule && moduleCfg ? (
             <div className={styles.breadcrumb}>
-              <button
-                className={styles.bcHome}
-                onClick={() => navigate('/idea_hub')}
-              >
+              <button className={styles.bcHome} onClick={() => navigate('/idea_hub')}>
                 Home
               </button>
               <span className={styles.bcSep}>/</span>
@@ -222,36 +159,48 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
             <button
               type="button"
               className={styles.addEntryBtn}
-              onClick={onAddEntry ? onAddEntry : () => {
-                navigate(`/idea_hub/form?module=${currentModule}`);
-              }}
+              onClick={
+                onAddEntry
+                  ? onAddEntry
+                  : () => {
+                      navigate(`/idea_hub/form?module=${currentModule}`);
+                    }
+              }
             >
               <span className={styles.addIcon}>+</span> Add Entry
             </button>
           )}
 
-          {/* Avatar Profile */}
+          {/* Avatar Profile / Skeleton */}
           <div className={styles.avatarWrap}>
-            <div
-              className={styles.avatarTrigger}
-              onClick={(e) => {
-                e.stopPropagation();
-                setDropdownOpen(!dropdownOpen);
-              }}
-            >
-              <div className={styles.avatarCircle}>{userProfile.initials}</div>
-              <div className={styles.avatarInlineInfo}>
-                <span className={styles.avatarInlineName}>{userProfile.name}</span>
-                <span className={styles.avatarInlineLoc}>
-                  {userProfile.location
-                    ? `${userProfile.location}${userProfile.country ? `, ${userProfile.country}` : ''}`
-                    : userProfile.country}
+            {authLoading ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Skeleton variant="circle" width={34} height={34} style={{ background: 'rgba(255,255,255,0.2)' }} />
+              </div>
+            ) : (
+              <div
+                className={styles.avatarTrigger}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
+                <div className={styles.avatarCircle}>{userProfile.initials}</div>
+                <div className={styles.avatarInlineInfo}>
+                  <span className={styles.avatarInlineName}>{userProfile.name}</span>
+                  <span className={styles.avatarInlineLoc}>
+                    {userProfile.location
+                      ? `${userProfile.location}${userProfile.country ? `, ${userProfile.country}` : ''}`
+                      : userProfile.country}
+                  </span>
+                </div>
+                <span
+                  className={`${styles.avatarCaret} ${dropdownOpen ? styles.avatarCaretOpen : ''}`}
+                >
+                  ▼
                 </span>
               </div>
-              <span className={`${styles.avatarCaret} ${dropdownOpen ? styles.avatarCaretOpen : ''}`}>
-                ▼
-              </span>
-            </div>
+            )}
 
             {dropdownOpen && (
               <div className={styles.avatarDropdown} onClick={(e) => e.stopPropagation()}>
