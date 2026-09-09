@@ -1,0 +1,419 @@
+/* viewModal.module.css */
+/* =============================================
+   EPL Idea Hub — Packaging Innovation Portal
+   Brand: Navy #003c96 · Green #78aa28 · Teal #3c8c50
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.ideaHubContainer {
+  /* ── EPL Brand Colors ── */
+  --epl-navy: #003c96;
+  --epl-navy-dark: #002870;
+  --epl-navy-deep: #001e55;
+  --epl-navy-mid: #0046b0;
+  --epl-navy-lt: #e6edf8;
+  --epl-navy-50: #f0f4fc;
+
+  --epl-green: #78aa28;
+  --epl-green-dark: #5a8a10;
+  --epl-green-lt: #eef6d6;
+  --epl-green-50: #f5fae8;
+
+  --epl-teal: #3c8c50;
+  --epl-teal-lt: #e6f2ea;
+
+  /* gradient matching logo */
+  --epl-gradient: linear-gradient(135deg, var(--epl-navy) 0%, var(--epl-teal) 50%, var(--epl-green) 100%);
+  --epl-grad-h: linear-gradient(90deg, var(--epl-navy) 0%, var(--epl-teal) 50%, var(--epl-green) 100%);
+
+  /* ── Neutral palette ── */
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+
+  --danger: #dc2626;
+  --success: #22c55e;
+
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --header-h: 68px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-sm: 0 1px 4px rgba(0, 28, 80, .07);
+  --shadow-md: 0 4px 16px rgba(0, 28, 80, .10);
+  --shadow-card: 0 2px 10px rgba(0, 28, 80, .08);
+  --shadow-hover: 0 6px 28px rgba(0, 60, 150, .18);
+
+  font-family: var(--font-body);
+  background: var(--gray-50);
+  color: var(--gray-900);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(0, 20, 60, .5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .2s ease both;
+}
+
+.btnCancel {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13.5px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btnCancel:hover {
+  background: #f1f5f9;
+}
+
+.editModal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 20, 60, .25);
+  overflow: hidden;
+  animation: slideUp .25s cubic-bezier(.4, 0, .2, 1) both;
+}
+
+.editModalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 28px 20px;
+  background: #001e55;
+  border-bottom: 3px solid #78aa28;
+  flex-shrink: 0;
+}
+
+.editModalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 12px 2px 8px;
+  border-radius: 100px;
+  background: rgba(120, 170, 40, .18);
+  border: 1px solid rgba(120, 170, 40, .4);
+  color: #78aa28;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.editModalBadge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #78aa28;
+  flex-shrink: 0;
+}
+
+.editModalTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: .2px;
+}
+
+.editCloseBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: rgba(255, 255, 255, .8);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.editCloseBtn:hover {
+  background: rgba(255, 255, 255, .22);
+  color: #fff;
+}
+
+.editModalBody {
+  overflow-y: auto;
+  padding: 26px 28px 16px;
+  flex: 1;
+}
+
+.editModalBody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.editModalBody::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.editModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 28px 20px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+
+
+.cellRef {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #003c96;
+  background: #f0f4fc;
+  border: 1px solid #e6edf8;
+  border-radius: 6px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  letter-spacing: .4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.cellRef:hover {
+  background: #e6edf8;
+  text-decoration: underline;
+}
+
+.countryBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #eef6d6;
+  color: #3c8c50;
+  border: 1px solid #eef6d6;
+  white-space: nowrap;
+}
+.cellPrice {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3c8c50;
+  white-space: nowrap;
+}
+
+.cellDate {
+  white-space: nowrap;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.cellImages {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cellImgThumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1.5px solid #e2e8f0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cellImgThumb:hover {
+  border-color: #003c96;
+  transform: scale(1.08);
+}
+
+.cellNoImg {
+  font-size: 11px;
+  color: #cbd5e1;
+  font-style: italic;
+}
+
+
+/* View Details Modal items */
+.viewRow {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.viewRow:last-child {
+  border-bottom: none;
+}
+
+.viewLabel {
+  flex: 0 0 160px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #003c96;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+.viewValue {
+  flex: 1;
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.viewContactCard {
+  padding: 10px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.viewContactCard:last-child {
+  border-bottom: none;
+}
+
+.viewContactIdx {
+  font-size: 11px;
+  font-weight: 700;
+  color: #78aa28;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 6px;
+}
+
+.viewContactField {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  padding: 2px 0;
+}
+
+.vcLabel {
+  flex: 0 0 60px;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.vcVal {
+  color: #334155;
+}
+
+.vcVal a {
+  color: #003c96;
+  text-decoration: none;
+}
+
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 700px) {
+  .editModal {
+    width: 96%;
+    max-height: 94vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .editModal {
+    width: 98%;
+    max-height: 95vh;
+  }
+}

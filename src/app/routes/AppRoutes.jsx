@@ -16,7 +16,7 @@ import {
 } from '../../modules/sample-portal';
 
 // Protected Route checks localStorage validation
-function ProtectedRoute() {
+function  ProtectedRoute() {
   const uid = localStorage.getItem('uid');
   const authUser = localStorage.getItem('auth_user');
 

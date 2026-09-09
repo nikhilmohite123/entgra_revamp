@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/IdeaHubModals.module.css';
-import { MODULE_LABELS, COUNTRY_OPTIONS } from '../constants/ideaHubConstants';
-import { ENV } from '../../../config/env';
-import Skeleton from '../../../components/common/Skeleton/Skeleton';
+import styles from '../styles/editModal.module.css';
+import { MODULE_LABELS, COUNTRY_OPTIONS, BASE_URL } from '../constants/ideaHubConstants';
 
 export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLightbox }) {
   const [loading, setLoading] = useState(true);
@@ -25,15 +23,16 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
     production_unit: '',
     price_per_thousand: '',
     module_type: 'material',
-    main_module: '',
+    main_module: ''
   });
 
   const [existingFiles, setExistingFiles] = useState([]);
   const [removedFileIds, setRemovedFileIds] = useState([]);
   const [newFiles, setNewFiles] = useState([]);
   const [contacts, setContacts] = useState([
-    { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false },
+    { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false }
   ]);
+  const baseUrl = BASE_URL;
 
   // Load entry details
   useEffect(() => {
@@ -41,8 +40,8 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
     setLoading(true);
     setErrorMsg('');
 
-    fetch(`${ENV.API_BASE_URL}/api/innovations/innovation/${id}`)
-      .then((r) => r.json())
+    fetch(`${baseUrl}/api/innovations/${id}`)
+      .then((res) => res.json())
       .then((res) => {
         if (!res || !res.success || !res.data) {
           setErrorMsg(res?.message || 'Failed to load innovation details.');
@@ -65,7 +64,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
           production_unit: d.s_production_unit || '',
           price_per_thousand: d.n_price_per_1000 != null ? d.n_price_per_1000 : '',
           module_type: d.s_module_type || 'material',
-          main_module: d.s_main_module || '',
+          main_module: d.s_main_module || ''
         });
 
         setExistingFiles(Array.isArray(d.files) ? d.files : []);
@@ -77,13 +76,13 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
           setContacts(apiContacts.map((c) => ({ ...c, _removed: false })));
         } else {
           setContacts([
-            { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false },
+            { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false }
           ]);
         }
         setLoading(false);
       })
-      .catch((err) => {
-        setErrorMsg(err.message || 'Network error while loading innovation details.');
+      .catch(() => {
+        setErrorMsg('Network error while loading innovation details.');
         setLoading(false);
       });
   }, [id]);
@@ -102,7 +101,9 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
   const isOthers = formData.module_type === 'others';
   const isCommercial =
     (formData.main_module || '').toLowerCase().includes('commercialised') ||
-    Boolean(formData.specification || formData.production_unit || formData.price_per_thousand);
+    formData.specification ||
+    formData.production_unit ||
+    formData.price_per_thousand;
   const cfg = MODULE_LABELS[formData.module_type] || { label: formData.module_type };
 
   // File toggles
@@ -120,7 +121,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
       file,
       name: file.name,
       size: file.size,
-      previewUrl: URL.createObjectURL(file),
+      previewUrl: URL.createObjectURL(file)
     }));
     setNewFiles((prev) => [...prev, ...added]);
     e.target.value = '';
@@ -134,18 +135,22 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
   const handleAddContact = () => {
     setContacts((prev) => [
       ...prev,
-      { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false },
+      { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false }
     ]);
   };
 
   const handleRemoveContact = (idx) => {
     const active = contacts.filter((c) => !c._removed);
     if (active.length <= 1) return;
-    setContacts((prev) => prev.map((c, i) => (i === idx ? { ...c, _removed: true } : c)));
+    setContacts((prev) =>
+      prev.map((c, i) => (i === idx ? { ...c, _removed: true } : c))
+    );
   };
 
   const handleUpdateContact = (idx, field, val) => {
-    setContacts((prev) => prev.map((c, i) => (i === idx ? { ...c, [field]: val } : c)));
+    setContacts((prev) =>
+      prev.map((c, i) => (i === idx ? { ...c, [field]: val } : c))
+    );
   };
 
   // Submit Handler
@@ -154,12 +159,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
     setErrorMsg('');
 
     // Required checks
-    if (
-      !formData.team_member.trim() ||
-      !formData.company_name.trim() ||
-      !formData.country ||
-      !formData.location.trim()
-    ) {
+    if (!formData.team_member.trim() || !formData.company_name.trim() || !formData.country || !formData.location.trim()) {
       setErrorMsg('Please fill in all mandatory fields.');
       return;
     }
@@ -178,7 +178,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
 
     // Validate Contacts
     const activeContacts = contacts.filter((c) => !c._removed);
-    for (const c of activeContacts) {
+    for (let c of activeContacts) {
       if (!c.s_contact_name.trim()) {
         setErrorMsg('Please enter a name for all contacts.');
         return;
@@ -213,10 +213,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
       if (isCommercial) {
         fd.append('s_specification', formData.specification.trim());
         fd.append('s_production_unit', formData.production_unit.trim());
-        fd.append(
-          'n_price_per_1000',
-          formData.price_per_thousand !== '' ? formData.price_per_thousand : ''
-        );
+        fd.append('n_price_per_1000', formData.price_per_thousand !== '' ? formData.price_per_thousand : '');
       }
 
       fd.append('remove_file_ids', removedFileIds.join(','));
@@ -233,7 +230,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
             n_cont_id: c.n_cont_id || undefined,
             s_contact_name: c.s_contact_name.trim(),
             s_phone: (c.s_phone || '').trim(),
-            s_email: c.s_email.trim(),
+            s_email: c.s_email.trim()
           }))
         )
       );
@@ -243,22 +240,21 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
         fd.append('images', item.file, item.name);
       });
 
-      const response = await fetch(`${ENV.API_BASE_URL}/api/innovations/innovations/${id}`, {
+      const res = await fetch(`${baseUrl}/api/innovations/${id}`, {
         method: 'PUT',
-        body: fd,
+        body: fd
       });
+      const data = await res.json();
 
-      const data = await response.json();
-
-      if (response.ok && data && data.success) {
+      if (data && data.success) {
         if (showToast) showToast('Entry updated successfully!', 'success');
         onSuccess();
         onClose();
       } else {
         setErrorMsg(data?.message || 'Update failed on server.');
       }
-    } catch (err) {
-      setErrorMsg(err.message || 'Failed to update entry. Network error.');
+    } catch {
+      setErrorMsg('Failed to update entry. Network error.');
     } finally {
       setSaving(false);
     }
@@ -281,35 +277,17 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
         {/* Modal Body */}
         <div className={styles.editModalBody}>
           {loading ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <Skeleton width="40%" height={16} />
-              <Skeleton variant="rounded" height={40} />
-              <Skeleton width="30%" height={16} />
-              <Skeleton variant="rounded" height={70} />
-              <Skeleton width="30%" height={16} />
-              <Skeleton variant="rounded" height={70} />
+            <div className={styles.tableLoading}>
+              <div className={styles.spinner}></div>
+              <p>Loading innovation data…</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {errorMsg && (
-                <div
-                  style={{
-                    background: '#fee2e2',
-                    border: '1px solid #fca5a5',
-                    color: '#b91c1c',
-                    padding: '10px 14px',
-                    borderRadius: '8px',
-                    fontSize: '0.85rem',
-                    fontWeight: 600,
-                  }}
-                >
-                  {errorMsg}
-                </div>
-              )}
+            <form onSubmit={handleSubmit}>
+              {errorMsg && <div className={styles.errorBanner}>{errorMsg}</div>}
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                  Team Member <span style={{ color: '#dc2626' }}>*</span>
+              <div className={styles.formGroup}>
+                <label>
+                  Team Member <span className={styles.required}>*</span>
                 </label>
                 <input
                   type="text"
@@ -317,20 +295,14 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                   onChange={(e) => setFormData({ ...formData, team_member: e.target.value })}
                   required
                   placeholder="Enter team member name"
-                  style={{
-                    padding: '10px 14px',
-                    border: '1px solid #d9e2ef',
-                    borderRadius: '8px',
-                    fontSize: '0.88rem',
-                  }}
                 />
               </div>
 
               {!isOthers ? (
                 <>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                      Feature <span style={{ color: '#dc2626' }}>*</span>
+                  <div className={styles.formGroup}>
+                    <label>
+                      Feature <span className={styles.required}>*</span>
                     </label>
                     <textarea
                       rows={3}
@@ -338,19 +310,12 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                       onChange={(e) => setFormData({ ...formData, feature: e.target.value })}
                       placeholder="Enter Feature"
                       required
-                      style={{
-                        padding: '10px 14px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '8px',
-                        fontSize: '0.88rem',
-                        fontFamily: 'inherit',
-                      }}
                     />
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                      Benefit <span style={{ color: '#dc2626' }}>*</span>
+                  <div className={styles.formGroup}>
+                    <label>
+                      Benefit <span className={styles.required}>*</span>
                     </label>
                     <textarea
                       rows={3}
@@ -358,19 +323,12 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                       onChange={(e) => setFormData({ ...formData, benefit: e.target.value })}
                       placeholder="Enter Benefit"
                       required
-                      style={{
-                        padding: '10px 14px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '8px',
-                        fontSize: '0.88rem',
-                        fontFamily: 'inherit',
-                      }}
                     />
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                      Application <span style={{ color: '#dc2626' }}>*</span>
+                  <div className={styles.formGroup}>
+                    <label>
+                      Application <span className={styles.required}>*</span>
                     </label>
                     <textarea
                       rows={3}
@@ -378,21 +336,14 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                       onChange={(e) => setFormData({ ...formData, application: e.target.value })}
                       placeholder="Enter Application"
                       required
-                      style={{
-                        padding: '10px 14px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '8px',
-                        fontSize: '0.88rem',
-                        fontFamily: 'inherit',
-                      }}
                     />
                   </div>
                 </>
               ) : (
                 <>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                      Innovation Details <span style={{ color: '#dc2626' }}>*</span>
+                  <div className={styles.formGroup}>
+                    <label>
+                      Innovation Details <span className={styles.required}>*</span>
                     </label>
                     <textarea
                       rows={4}
@@ -402,30 +353,16 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                       }
                       placeholder="Enter Innovation Details"
                       required
-                      style={{
-                        padding: '10px 14px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '8px',
-                        fontSize: '0.88rem',
-                        fontFamily: 'inherit',
-                      }}
                     />
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Comments</label>
+                  <div className={styles.formGroup}>
+                    <label>Comments</label>
                     <textarea
                       rows={3}
                       value={formData.comments}
                       onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
                       placeholder="Enter Comments"
-                      style={{
-                        padding: '10px 14px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '8px',
-                        fontSize: '0.88rem',
-                        fontFamily: 'inherit',
-                      }}
                     />
                   </div>
                 </>
@@ -433,17 +370,11 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
 
               {/* Current Images */}
               {existingFiles.length > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                    Current Images (Click × to mark for removal)
-                  </label>
+                <div className={styles.formGroup}>
+                  <label>Current Images (Click × to mark for removal)</label>
                   <div className={styles.existingImagesGrid}>
                     {existingFiles.map((f) => {
                       const isMarked = removedFileIds.includes(f.n_file_id);
-                      const path = f.s_file_path || '';
-                      const imgUrl = path.startsWith('http')
-                        ? path
-                        : `${ENV.API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
                       return (
                         <div
                           key={f.n_file_id}
@@ -452,9 +383,9 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                           }`}
                         >
                           <img
-                            src={imgUrl}
+                            src={`${baseUrl}${f.s_file_path}`}
                             alt="Current attachment"
-                            onClick={() => onOpenLightbox(imgUrl)}
+                            onClick={() => onOpenLightbox(`${baseUrl}${f.s_file_path}`)}
                           />
                           <button
                             type="button"
@@ -472,58 +403,31 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
               )}
 
               {/* Add New Images */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                  Add More Images <span style={{ fontSize: '0.75rem', color: '#718096' }}>(Optional)</span>
+              <div className={styles.formGroup}>
+                <label>
+                  Add More Images <span className={styles.optional}>(Optional)</span>
                 </label>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <label
-                    style={{
-                      background: '#062b67',
-                      color: '#fff',
-                      padding: '8px 16px',
-                      borderRadius: '6px',
-                      fontSize: '0.8rem',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                    }}
-                  >
+                <div className={styles.uploadZone}>
+                  <label className={styles.uploadBtn}>
                     + Upload Images
                     <input
                       type="file"
                       multiple
                       accept="image/*"
-                      style={{ display: 'none' }}
                       onChange={handleNewFilesChange}
                     />
                   </label>
-                  <span style={{ fontSize: '0.75rem', color: '#a0aec0' }}>
-                    JPG, PNG, GIF, WebP
-                  </span>
+                  <span className={styles.uploadHint}>JPG, PNG, GIF, WebP</span>
                 </div>
 
                 {newFiles.length > 0 && (
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '8px' }}>
+                  <div className={styles.imagePreviewGrid}>
                     {newFiles.map((item, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          position: 'relative',
-                          width: '70px',
-                          height: '70px',
-                          borderRadius: '8px',
-                          overflow: 'hidden',
-                          border: '1px solid #d9e2ef',
-                        }}
-                      >
-                        <img
-                          src={item.previewUrl}
-                          alt="Preview"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
+                      <div key={idx} className={styles.previewItem}>
+                        <img src={item.previewUrl} alt="Preview" />
                         <button
                           type="button"
-                          className={styles.removeExisting}
+                          className={styles.previewRemove}
                           onClick={() => removeNewFile(idx)}
                           title="Remove"
                         >
@@ -536,10 +440,10 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
               </div>
 
               {/* Company & Country */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                    Company Name <span style={{ color: '#dc2626' }}>*</span>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label>
+                    Company Name <span className={styles.required}>*</span>
                   </label>
                   <input
                     type="text"
@@ -547,47 +451,38 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                     onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
                     required
                     placeholder="Enter company name"
-                    style={{
-                      padding: '10px 14px',
-                      border: '1px solid #d9e2ef',
-                      borderRadius: '8px',
-                      fontSize: '0.88rem',
-                    }}
                   />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                    Country <span style={{ color: '#dc2626' }}>*</span>
+                <div className={styles.formGroup}>
+                  <label>
+                    Country <span className={styles.required}>*</span>
                   </label>
-                  <select
-                    value={formData.country}
-                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    required
-                    style={{
-                      padding: '10px 14px',
-                      border: '1px solid #d9e2ef',
-                      borderRadius: '8px',
-                      fontSize: '0.88rem',
-                    }}
-                  >
-                    <option value="" disabled>
-                      Select country
-                    </option>
-                    {COUNTRY_OPTIONS.map((c) => (
-                      <option key={c.value} value={c.value}>
-                        {c.label}
+                  <div className={styles.selectWrapper}>
+                    <select
+                      value={formData.country}
+                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select country
                       </option>
-                    ))}
-                  </select>
+                      {COUNTRY_OPTIONS.map((c) => (
+                        <option key={c.value} value={c.value}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </select>
+                    <span className={styles.selectArrow}>⌄</span>
+                  </div>
                 </div>
               </div>
 
               {/* Location & Links */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-                    Location <span style={{ color: '#dc2626' }}>*</span>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label>
+                    Location <span className={styles.required}>*</span>
                   </label>
                   <input
                     type="text"
@@ -595,60 +490,30 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     required
                     placeholder="Enter location"
-                    style={{
-                      padding: '10px 14px',
-                      border: '1px solid #d9e2ef',
-                      borderRadius: '8px',
-                      fontSize: '0.88rem',
-                    }}
                   />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Links</label>
+                <div className={styles.formGroup}>
+                  <label>Links</label>
                   <input
                     type="url"
                     value={formData.links}
                     onChange={(e) => setFormData({ ...formData, links: e.target.value })}
                     placeholder="https://..."
-                    style={{
-                      padding: '10px 14px',
-                      border: '1px solid #d9e2ef',
-                      borderRadius: '8px',
-                      fontSize: '0.88rem',
-                    }}
                   />
                 </div>
               </div>
 
               {/* Commercial Fields */}
               {isCommercial && (
-                <div
-                  style={{
-                    background: '#fbfdf9',
-                    border: '1px solid #c9e28f',
-                    borderRadius: '12px',
-                    padding: '16px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      color: '#4e9624',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                    }}
-                  >
-                    🏭 Commercialised Innovation Details
+                <div className={styles.commercialFieldsBox}>
+                  <div className={styles.commercialSectionLabel}>
+                    <span className={styles.commercialSectionIcon}>🏭</span>
+                    Commercialised Innovation Details
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>Specification</label>
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Specification (Key In)</label>
                       <input
                         type="text"
                         value={formData.specification}
@@ -656,18 +521,10 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                           setFormData({ ...formData, specification: e.target.value })
                         }
                         placeholder="Enter specification"
-                        style={{
-                          padding: '8px 12px',
-                          border: '1px solid #d9e2ef',
-                          borderRadius: '6px',
-                          fontSize: '0.85rem',
-                        }}
                       />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>
-                        Production Unit
-                      </label>
+                    <div className={styles.formGroup}>
+                      <label>Production Unit / Location</label>
                       <input
                         type="text"
                         value={formData.production_unit}
@@ -675,19 +532,11 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                           setFormData({ ...formData, production_unit: e.target.value })
                         }
                         placeholder="Enter production unit"
-                        style={{
-                          padding: '8px 12px',
-                          border: '1px solid #d9e2ef',
-                          borderRadius: '6px',
-                          fontSize: '0.85rem',
-                        }}
                       />
                     </div>
                   </div>
-                  <div style={{ maxWidth: '240px' }}>
-                    <label style={{ fontSize: '0.82rem', fontWeight: 600 }}>
-                      Price per 1000 (USD)
-                    </label>
+                  <div className={styles.formGroup} style={{ maxWidth: '260px' }}>
+                    <label>Price per 1000 (USD)</label>
                     <input
                       type="number"
                       step="0.01"
@@ -697,24 +546,14 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                         setFormData({ ...formData, price_per_thousand: e.target.value })
                       }
                       placeholder="0.00"
-                      style={{
-                        width: '100%',
-                        padding: '8px 12px',
-                        border: '1px solid #d9e2ef',
-                        borderRadius: '6px',
-                        fontSize: '0.85rem',
-                        marginTop: '4px',
-                      }}
                     />
                   </div>
                 </div>
               )}
 
               {/* Contacts Section */}
-              <div style={{ margin: '8px 0' }}>
-                <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#062b67' }}>
-                  Contact Information
-                </span>
+              <div className={styles.formDivider}>
+                <span>Contact Information</span>
               </div>
 
               <div className={styles.contactList}>
@@ -724,51 +563,25 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                   const visIdx = activeContacts.indexOf(c) + 1;
 
                   return (
-                    <div
-                      key={c.n_cont_id || i}
-                      style={{
-                        background: '#f8fafc',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '8px',
-                        padding: '14px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '10px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#062b67' }}>
-                          Contact {visIdx}
-                        </span>
+                    <div key={c.n_cont_id || i} className={styles.contactCard}>
+                      <div className={styles.contactCardHeader}>
+                        <span className={styles.contactCardLabel}>Contact {visIdx}</span>
                         {activeContacts.length > 1 && (
                           <button
                             type="button"
+                            className={styles.contactRemoveBtn}
                             onClick={() => handleRemoveContact(i)}
-                            style={{
-                              background: 'none',
-                              border: 'none',
-                              color: '#dc2626',
-                              fontSize: '1.2rem',
-                              cursor: 'pointer',
-                            }}
+                            title="Remove Contact"
                           >
                             ×
                           </button>
                         )}
                       </div>
 
-                      <div
-                        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}
-                      >
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>
-                            Name <span style={{ color: '#dc2626' }}>*</span>
+                      <div className={styles.formRow}>
+                        <div className={styles.formGroup}>
+                          <label>
+                            Name <span className={styles.required}>*</span>
                           </label>
                           <input
                             type="text"
@@ -778,48 +591,34 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
                             }
                             placeholder="Full name"
                             required
-                            style={{
-                              padding: '8px 12px',
-                              border: '1px solid #d9e2ef',
-                              borderRadius: '6px',
-                              fontSize: '0.85rem',
-                            }}
                           />
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>Phone</label>
+                        <div className={styles.formGroup}>
+                          <label>Phone</label>
                           <input
                             type="tel"
                             value={c.s_phone || ''}
-                            onChange={(e) => handleUpdateContact(i, 's_phone', e.target.value)}
+                            onChange={(e) =>
+                              handleUpdateContact(i, 's_phone', e.target.value)
+                            }
                             placeholder="Phone number"
-                            style={{
-                              padding: '8px 12px',
-                              border: '1px solid #d9e2ef',
-                              borderRadius: '6px',
-                              fontSize: '0.85rem',
-                            }}
                           />
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        <label style={{ fontSize: '0.8rem', fontWeight: 600 }}>
-                          Email <span style={{ color: '#dc2626' }}>*</span>
+                      <div className={styles.formGroup}>
+                        <label>
+                          Email <span className={styles.required}>*</span>
                         </label>
                         <input
                           type="email"
                           value={c.s_email}
-                          onChange={(e) => handleUpdateContact(i, 's_email', e.target.value)}
+                          onChange={(e) =>
+                            handleUpdateContact(i, 's_email', e.target.value)
+                          }
                           placeholder="contact@company.com"
                           required
-                          style={{
-                            padding: '8px 12px',
-                            border: '1px solid #d9e2ef',
-                            borderRadius: '6px',
-                            fontSize: '0.85rem',
-                          }}
                         />
                       </div>
                     </div>
@@ -829,20 +628,10 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
 
               <button
                 type="button"
+                className={styles.addContactBtn}
                 onClick={handleAddContact}
-                style={{
-                  alignSelf: 'flex-start',
-                  background: '#eaf2fc',
-                  border: '1px dashed #062b67',
-                  color: '#062b67',
-                  padding: '8px 14px',
-                  borderRadius: '6px',
-                  fontSize: '0.82rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
               >
-                + Add Another Contact
+                <span>+</span> Add Another Contact
               </button>
             </form>
           )}

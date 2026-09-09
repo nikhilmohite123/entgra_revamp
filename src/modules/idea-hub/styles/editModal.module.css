@@ -1,4 +1,4 @@
-/* formPage.module.css */
+/* editModal.module.css */
 /* =============================================
    EPL Idea Hub — Packaging Innovation Portal
    Brand: Navy #003c96 · Green #78aa28 · Teal #3c8c50
@@ -74,6 +74,217 @@
   color: #94a3b8;
   pointer-events: none;
   font-size: 15px;
+}
+
+/* Empty & Loading states */
+.tableEmpty,
+.tableLoading {
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 42px;
+  margin-bottom: 14px;
+}
+
+.emptyTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.emptySub {
+  font-size: 13.5px;
+  color: #94a3b8;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e6edf8;
+  border-top-color: #003c96;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin: 0 auto 14px;
+}
+
+.tableLoading p {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(0, 20, 60, .5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .2s ease both;
+}
+
+.btnCancel {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13.5px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btnCancel:hover {
+  background: #f1f5f9;
+}
+
+/* Edit & View Modals */
+.editModal {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 20, 60, .25);
+  overflow: hidden;
+  animation: slideUp .25s cubic-bezier(.4, 0, .2, 1) both;
+}
+
+.editModalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 28px 20px;
+  background: #001e55;
+  border-bottom: 3px solid #78aa28;
+  flex-shrink: 0;
+}
+
+.editModalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 12px 2px 8px;
+  border-radius: 100px;
+  background: rgba(120, 170, 40, .18);
+  border: 1px solid rgba(120, 170, 40, .4);
+  color: #78aa28;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.editModalBadge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #78aa28;
+  flex-shrink: 0;
+}
+
+.editModalTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: .2px;
+}
+
+.editCloseBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: rgba(255, 255, 255, .8);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.editCloseBtn:hover {
+  background: rgba(255, 255, 255, .22);
+  color: #fff;
+}
+
+.editModalBody {
+  overflow-y: auto;
+  padding: 26px 28px 16px;
+  flex: 1;
+}
+
+.editModalBody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.editModalBody::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.editModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 28px 20px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.btnSave {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  background: #78aa28;
+  color: #fff;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 8px rgba(120, 170, 40, .25);
+}
+
+.btnSave:hover {
+  background: #5a8a10;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(120, 170, 40, .35);
+}
+
+.btnSave:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnLoaderSm {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, .3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
 }
 
 /* Forms inside modal */
@@ -469,367 +680,6 @@
   font-size: 13px;
 }
 
-/* ══════════════════════════════════════
-   FORM PAGE STYLES
-══════════════════════════════════════ */
-.backBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, .2);
-  color: rgba(255, 255, 255, .85);
-  font-size: 13px;
-  font-family: 'DM Sans', sans-serif;
-  text-decoration: none;
-  transition: 0.2s;
-  background: rgba(255, 255, 255, .08);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.backBtn:hover {
-  background: rgba(255, 255, 255, .16);
-  color: #ffffff;
-}
-
-.formMain {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 36px 20px 72px;
-  animation: fadeUp .35s both;
-  width: 100%;
-  flex: 1;
-}
-
-.formContainer {
-  background: #ffffff;
-  border-radius: 20px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 16px rgba(0, 28, 80, .10);
-  overflow: hidden;
-}
-
-.formHeader {
-  background: #001e55;
-  border-bottom: 3px solid #78aa28;
-  padding: 34px 38px 28px;
-  position: relative;
-  overflow: hidden;
-}
-
-.formHeader::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 220px;
-  background: linear-gradient(90deg, transparent, rgba(120, 170, 40, .08));
-  pointer-events: none;
-}
-
-.moduleBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 13px 3px 9px;
-  border-radius: 100px;
-  background: rgba(120, 170, 40, .15);
-  border: 1px solid rgba(120, 170, 40, .35);
-  color: #78aa28;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 11px;
-}
-
-.moduleBadge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #78aa28;
-  flex-shrink: 0;
-}
-
-.formHeader h1 {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: clamp(19px, 3.5vw, 27px);
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 7px;
-}
-
-.formSubtitle {
-  font-size: 13px;
-  color: rgba(255, 255, 255, .55);
-  font-style: italic;
-}
-
-.formBody {
-  padding: 32px 38px 38px;
-  background: #ffffff;
-}
-
-/* Upload zone */
-.uploadZone {
-  border: 2px dashed #e2e8f0;
-  border-radius: 10px;
-  padding: 28px 18px;
-  text-align: center;
-  background: #f8fafc;
-  transition: 0.2s;
-  cursor: pointer;
-  position: relative;
-}
-
-.uploadZoneDragging,
-.uploadZone:hover {
-  border-color: #003c96;
-  background: #f0f4fc;
-}
-
-.uploadIcon {
-  width: 42px;
-  height: 42px;
-  margin: 0 auto 10px;
-  color: #cbd5e1;
-}
-
-.uploadIcon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.uploadText {
-  font-size: 14px;
-  font-weight: 500;
-  color: #334155;
-  margin-bottom: 3px;
-}
-
-.uploadSub {
-  font-size: 12px;
-  color: #94a3b8;
-  margin-bottom: 10px;
-}
-
-.uploadActions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 7px;
-}
-
-.uploadBtn {
-  display: inline-block;
-  padding: 7px 18px;
-  border-radius: 6px;
-  background: #003c96;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.uploadBtn:hover {
-  background: #0046b0;
-}
-
-.cameraBtn {
-  background: #3c8c50 !important;
-}
-
-.cameraBtn:hover {
-  background: #2f6f3f !important;
-}
-
-.uploadHint {
-  font-size: 11px;
-  color: #94a3b8;
-}
-
-.imagePreviewGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-
-/* Submit button */
-.formActions {
-  margin-top: 28px;
-}
-
-.submitBtn {
-  width: 100%;
-  padding: 13px 28px;
-  border: none;
-  border-radius: 10px;
-  background: #78aa28;
-  color: #fff;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: .8px;
-  cursor: pointer;
-  transition: 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  box-shadow: 0 2px 10px rgba(120, 170, 40, .3);
-}
-
-.submitBtn:hover {
-  background: #5a8a10;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(120, 170, 40, .35);
-}
-
-.submitBtn:active {
-  transform: translateY(0);
-}
-
-.submitBtn:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btnLoader {
-  width: 17px;
-  height: 17px;
-  border: 2px solid rgba(255, 255, 255, .3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-}
-
-.successMessage {
-  padding: 56px 38px;
-  text-align: center;
-  background: #ffffff;
-  animation: fadeIn .3s ease both;
-}
-
-.successIcon {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  background: #78aa28;
-  color: #fff;
-  font-size: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
-  box-shadow: 0 6px 20px rgba(120, 170, 40, .3);
-}
-
-.successMessage h2 {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 25px;
-  color: #0f172a;
-  margin-bottom: 9px;
-}
-
-.successMessage p {
-  color: #64748b;
-  font-size: 14px;
-  margin-bottom: 26px;
-}
-
-.backHomeBtn {
-  display: inline-block;
-  padding: 11px 26px;
-  border-radius: 10px;
-  background: #003c96;
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: 0.2s;
-  cursor: pointer;
-  border: none;
-}
-
-.backHomeBtn:hover {
-  background: #0046b0;
-  transform: translateY(-1px);
-}
-
-/* Validation Popup */
-.validationPopupOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 600;
-  background: rgba(0, 20, 60, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn .2s ease both;
-}
-
-.validationPopup {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 36px 32px 28px;
-  max-width: 360px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 20, 60, 0.25);
-  animation: slideUp .25s cubic-bezier(.4, 0, .2, 1) both;
-}
-
-.validationPopupIcon {
-  font-size: 42px;
-  margin-bottom: 14px;
-  line-height: 1;
-}
-
-.validationPopupTitle {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 10px;
-}
-
-.validationPopupMsg {
-  font-size: 14px;
-  color: #64748b;
-  line-height: 1.65;
-  margin-bottom: 24px;
-}
-
-.validationPopupBtn {
-  display: inline-block;
-  padding: 11px 32px;
-  border-radius: 10px;
-  background: #dc2626;
-  color: #ffffff;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s;
-  letter-spacing: .3px;
-}
-
-.validationPopupBtn:hover {
-  background: #b91c1c;
-  transform: translateY(-1px);
-}
-
-
 
 /* ══════════════════════════════════════
    ANIMATIONS
@@ -894,7 +744,20 @@
     gap: 0;
   }
 
-  .imagePreviewGrid {
+  .imagePreviewGrid,
+  .existingImagesGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .editModal {
+    width: 96%;
+    max-height: 94vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .editModal {
+    width: 98%;
+    max-height: 95vh;
   }
 }

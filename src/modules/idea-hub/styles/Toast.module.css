@@ -1,34 +1,160 @@
+/* toast.module.css */
+/* =============================================
+   EPL Idea Hub — Packaging Innovation Portal
+   Brand: Navy #003c96 · Green #78aa28 · Teal #3c8c50
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.ideaHubContainer {
+  /* ── EPL Brand Colors ── */
+  --epl-navy: #003c96;
+  --epl-navy-dark: #002870;
+  --epl-navy-deep: #001e55;
+  --epl-navy-mid: #0046b0;
+  --epl-navy-lt: #e6edf8;
+  --epl-navy-50: #f0f4fc;
+
+  --epl-green: #78aa28;
+  --epl-green-dark: #5a8a10;
+  --epl-green-lt: #eef6d6;
+  --epl-green-50: #f5fae8;
+
+  --epl-teal: #3c8c50;
+  --epl-teal-lt: #e6f2ea;
+
+  /* gradient matching logo */
+  --epl-gradient: linear-gradient(135deg, var(--epl-navy) 0%, var(--epl-teal) 50%, var(--epl-green) 100%);
+  --epl-grad-h: linear-gradient(90deg, var(--epl-navy) 0%, var(--epl-teal) 50%, var(--epl-green) 100%);
+
+  /* ── Neutral palette ── */
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+
+  --danger: #dc2626;
+  --success: #22c55e;
+
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --header-h: 68px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-sm: 0 1px 4px rgba(0, 28, 80, .07);
+  --shadow-md: 0 4px 16px rgba(0, 28, 80, .10);
+  --shadow-card: 0 2px 10px rgba(0, 28, 80, .08);
+  --shadow-hover: 0 6px 28px rgba(0, 60, 150, .18);
+
+  font-family: var(--font-body);
+  background: var(--gray-50);
+  color: var(--gray-900);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
 .toast {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  padding: 12px 22px;
-  border-radius: 50px;
-  color: #ffffff;
-  font-size: 0.88rem;
-  font-weight: 600;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  z-index: 1000;
-  animation: toastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  bottom: 28px;
+  right: 28px;
+  z-index: 600;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 20, 60, .2);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  animation: toastIn .3s cubic-bezier(.4, 0, .2, 1) both;
+  max-width: 320px;
 }
 
 .toastSuccess {
-  background: #22c55e;
-  border: 1px solid #16a34a;
+  background: #78aa28;
 }
 
 .toastError {
   background: #dc2626;
-  border: 1px solid #b91c1c;
 }
 
-@keyframes toastSlideUp {
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
   from {
-    transform: translateY(20px);
     opacity: 0;
+    transform: translateY(14px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .toast {
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
   }
 }

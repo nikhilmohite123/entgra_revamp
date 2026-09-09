@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/LandingPage.module.css';
+import styles from '../styles/landingPage.module.css';
 import SvgSprite from '../components/SvgSprite';
 import IdeaHubHeader from '../components/IdeaHubHeader';
 import IdeaHubFooter from '../components/IdeaHubFooter';
-import { CATEGORY_LABELS, MODULE_LABELS } from '../constants/ideaHubConstants';
-import { useIdeaHub } from '../context/useIdeaHub';
+import { CATEGORY_LABELS, MODULE_LABELS, BASE_URL } from '../constants/ideaHubConstants';
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { selectedCategory, setSelectedCategory, setSelectedModule } = useIdeaHub();
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Restore category from sessionStorage
+  const baseUrl = BASE_URL;
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('selectedCategory') || 'null');
+      if (saved && saved.num) {
+        setSelectedCategory(saved.num);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const handleSelectCategory = (num) => {
     setSelectedCategory(num);
+    const cat = CATEGORY_LABELS[num];
+    sessionStorage.setItem('selectedCategory', JSON.stringify({ num, ...cat }));
   };
 
   const handleOpenModule = (moduleKey) => {
     if (!selectedCategory) return;
-    setSelectedModule(moduleKey);
+    sessionStorage.setItem('selectedModule', moduleKey);
     navigate(`/idea_hub/table/${moduleKey}`);
   };
 
@@ -30,7 +44,10 @@ export default function LandingPage() {
       <SvgSprite />
 
       {/* Header */}
-      <IdeaHubHeader currentModule={null} selectedCategory={selectedCategory} />
+      <IdeaHubHeader
+        currentModule={null}
+        selectedCategory={selectedCategory}
+      />
 
       {/* Landing Main View */}
       <main className={styles.landingMain}>
@@ -66,6 +83,7 @@ export default function LandingPage() {
               </button>
             );
           })}
+        
         </div>
 
         {/* Notice shown when no category selected */}

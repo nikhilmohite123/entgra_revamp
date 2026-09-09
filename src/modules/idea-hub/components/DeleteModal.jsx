@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/IdeaHubModals.module.css';
-import { ENV } from '../../../config/env';
+import styles from '../styles/deleteModal.module.css';
+import { BASE_URL } from '../constants/ideaHubConstants';
 
 export default function DeleteModal({ isOpen, targetId, onClose, onSuccess, showToast }) {
   const [loading, setLoading] = useState(false);
-
+  const baseUrl = BASE_URL;
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && !loading) onClose();
@@ -19,25 +19,20 @@ export default function DeleteModal({ isOpen, targetId, onClose, onSuccess, show
 
   const handleDelete = async () => {
     setLoading(true);
-    const uid = localStorage.getItem('uid') || 'anonymous';
     try {
-      const response = await fetch(`${ENV.API_BASE_URL}/api/innovations/innovations/${targetId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ uid }),
+      const res = await fetch(`${baseUrl}/api/innovations/removeData/${targetId}`, {
+        method: 'POST'
       });
-      const data = await response.json();
-      if (response.ok && data && data.success) {
+      const data = await res.json();
+      if (data && data.success) {
         if (showToast) showToast('Entry deleted successfully.', 'success');
         onSuccess(targetId);
         onClose();
       } else {
         if (showToast) showToast(data?.message || 'Failed to delete entry.', 'error');
       }
-    } catch (err) {
-      if (showToast) showToast(err.message || 'Failed to delete entry. Network error.', 'error');
+    } catch {
+      if (showToast) showToast('Failed to delete entry. Network error.', 'error');
     } finally {
       setLoading(false);
     }

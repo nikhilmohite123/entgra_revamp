@@ -1,60 +1,36 @@
-import React, { useState, useMemo } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import styles from '../styles/FormPage.module.css';
+import React, { useState, useEffect } from 'react';
+import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
+import styles from '../styles/formPage.module.css';
 import SvgSprite from '../components/SvgSprite';
 import IdeaHubHeader from '../components/IdeaHubHeader';
 import IdeaHubFooter from '../components/IdeaHubFooter';
 import {
   MODULE_LABELS,
+  CATEGORY_LABELS,
   COUNTRY_OPTIONS,
+  BASE_URL
 } from '../constants/ideaHubConstants';
-import { useIdeaHub } from '../context/useIdeaHub';
-import { ENV } from '../../../config/env';
 
 export default function FormPage() {
   const { moduleType } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const {
-    selectedCategory,
-    activeCategoryObj,
-    userProfile,
-  } = useIdeaHub();
-
   // Resolve module type from param or query param
   const moduleParam = (moduleType || searchParams.get('module') || 'material').toLowerCase();
   const module = MODULE_LABELS[moduleParam] ? moduleParam : 'material';
   const config = MODULE_LABELS[module];
 
-  // Derive commercial mode cleanly using useMemo
-  const isCommercial = useMemo(() => {
-    if (activeCategoryObj) {
-      return (
-        activeCategoryObj.num === 1 ||
-        (activeCategoryObj.short || '').toLowerCase().includes('commercialised')
-      );
-    }
-    return selectedCategory === 1;
-  }, [activeCategoryObj, selectedCategory]);
-
   // State
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isCommercial, setIsCommercial] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [validationPopup, setValidationPopup] = useState(null);
+  const [validationPopup, setValidationPopup] = useState(null); // { title, message }
 
   // Form Fields
-  const [teamMember, setTeamMember] = useState(() => {
-    if (userProfile && userProfile.name && userProfile.name !== 'User') {
-      return userProfile.name;
-    }
-    const uid = localStorage.getItem('uid') || '';
-    const storedEmpName = localStorage.getItem('empName') || '';
-    return (storedEmpName || uid || 'User')
-      .replace(/[.]+/g, ' ')
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-  });
+  const [teamMember, setTeamMember] = useState('');
   const [feature, setFeature] = useState('');
   const [benefit, setBenefit] = useState('');
   const [application, setApplication] = useState('');
@@ -74,8 +50,50 @@ export default function FormPage() {
 
   // Contacts
   const [contacts, setContacts] = useState([
-    { s_contact_name: '', s_phone: '', s_email: '' },
+    { s_contact_name: '', s_phone: '', s_email: '' }
   ]);
+
+  const baseUrl = BASE_URL;
+
+  // Restore category & check commercial mode
+  useEffect(() => {
+    try {
+      const cat = JSON.parse(sessionStorage.getItem('selectedCategory') || 'null');
+      if (cat) {
+        setSelectedCategory(cat.num);
+        setIsCommercial(cat.num === 1 || (cat.short || '').toLowerCase().includes('commercialised'));
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  // Pre-fill user profile
+  useEffect(() => {
+    const uid = localStorage.getItem('uid') || '';
+    const storedEmpName = localStorage.getItem('empName') || '';
+
+    const initialName = (storedEmpName || uid || 'User')
+      .replace(/[.]+/g, ' ')
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+
+    setTeamMember(initialName);
+
+    if (uid) {
+      fetch(`${baseUrl}/api/innovations/userdetail`, {
+        headers: { 'x-uid': uid }
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res && res.success && res.data && res.data.s_emp_name) {
+            setTeamMember(res.data.s_emp_name);
+          }
+        })
+        .catch(() => {
+          // keep fallback
+        });
+    }
+  }, []);
 
   // File Upload Handlers
   const handleAddFiles = (files) => {
@@ -87,7 +105,7 @@ export default function FormPage() {
             file,
             name: file.name,
             size: file.size,
-            previewUrl: URL.createObjectURL(file),
+            previewUrl: URL.createObjectURL(file)
           });
         }
       }
@@ -151,7 +169,7 @@ export default function FormPage() {
       return;
     }
 
-    for (const c of contacts) {
+    for (let c of contacts) {
       if (!c.s_contact_name.trim()) {
         setErrorMsg('Please enter a name for all contacts.');
         return;
@@ -166,7 +184,7 @@ export default function FormPage() {
 
     try {
       const fd = new FormData();
-      const uid = userProfile.rawUid || localStorage.getItem('uid') || 'anonymous';
+      const uid = localStorage.getItem('uid') || 'anonymous';
 
       fd.append('s_module_type', module);
       fd.append('s_team_member', teamMember);
@@ -194,7 +212,13 @@ export default function FormPage() {
         fd.append('n_price_per_1000', pricePerThousand);
       }
 
-      const mainModule = activeCategoryObj ? activeCategoryObj.short : '';
+      let mainModule = '';
+      try {
+        const savedCat = JSON.parse(sessionStorage.getItem('selectedCategory') || 'null');
+        mainModule = savedCat ? savedCat.short : '';
+      } catch {
+        // ignore
+      }
       fd.append('s_main_module', mainModule);
 
       fd.append(
@@ -203,7 +227,7 @@ export default function FormPage() {
           contacts.map((c) => ({
             s_contact_name: c.s_contact_name.trim(),
             s_phone: (c.s_phone || '').trim(),
-            s_email: c.s_email.trim(),
+            s_email: c.s_email.trim()
           }))
         )
       );
@@ -212,22 +236,22 @@ export default function FormPage() {
         fd.append('images', item.file, item.name);
       });
 
-      const response = await fetch(`${ENV.API_BASE_URL}/api/innovations/innovations`, {
+      const res = await fetch(`${baseUrl}/api/innovations`, {
         method: 'POST',
-        body: fd,
+        body: fd
       });
+      const data = await res.json();
 
-      const data = await response.json();
       setLoading(false);
 
-      if (response.ok && data && data.success) {
+      if (data && data.success) {
         setIsSubmitted(true);
       } else {
         setErrorMsg(data?.message || 'Submission failed. Please try again.');
       }
-    } catch (err) {
+    } catch {
       setLoading(false);
-      setErrorMsg(err.message || 'Server error. Please try again later.');
+      setErrorMsg('Server error. Please try again later.');
     }
   };
 
@@ -280,7 +304,7 @@ export default function FormPage() {
                 <input
                   type="text"
                   value={teamMember}
-                  onChange={(e) => setTeamMember(e.target.value)}
+                  disabled
                   placeholder="Enter team member name(s)"
                   required
                 />

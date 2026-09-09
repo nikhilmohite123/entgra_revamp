@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import styles from '../styles/IdeaHubModals.module.css';
+import styles from '../styles/viewModal.module.css';
 import { MODULE_LABELS, buildRefNo, esc } from '../constants/ideaHubConstants';
-import { ENV } from '../../../config/env';
 
 export default function ViewModal({ row, onClose, onOpenLightbox }) {
   useEffect(() => {
@@ -20,11 +19,7 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
   const isOthers = row.s_module_type === 'others';
   const isCommercial = (row.s_main_module || '').toLowerCase().includes('commercialised');
   const date = row.d_created_at
-    ? new Date(row.d_created_at).toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      })
+    ? new Date(row.d_created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     : '—';
 
   return (
@@ -46,7 +41,7 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
           <div className={styles.viewRow}>
             <div className={styles.viewLabel}>Reference No.</div>
             <div className={styles.viewValue}>
-              <span style={{ fontWeight: 700, color: '#062b67' }}>{buildRefNo(row)}</span>
+              <span className={styles.cellRef}>{buildRefNo(row)}</span>
             </div>
           </div>
 
@@ -97,29 +92,17 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
             <div className={styles.viewRow}>
               <div className={styles.viewLabel}>Images</div>
               <div className={styles.viewValue}>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {files.map((f, idx) => {
-                    const path = f.s_file_path || '';
-                    const imgUrl = path.startsWith('http')
-                      ? path
-                      : `${ENV.API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
-                    return (
-                      <img
-                        key={f.n_file_id || idx}
-                        style={{
-                          width: '70px',
-                          height: '70px',
-                          borderRadius: '8px',
-                          objectFit: 'cover',
-                          cursor: 'pointer',
-                          border: '1px solid #d9e2ef',
-                        }}
-                        src={imgUrl}
-                        alt="Thumbnail"
-                        onClick={() => onOpenLightbox(imgUrl)}
-                      />
-                    );
-                  })}
+                <div className={styles.cellImages}>
+                  {files.map((f, idx) => (
+                    <img
+                      key={f.n_file_id || idx}
+                      className={styles.cellImgThumb}
+                      style={{ width: '70px', height: '70px' }}
+                      src={`/bpmn${f.s_file_path}`}
+                      alt="Thumbnail"
+                      onClick={() => onOpenLightbox(`/bpmn${f.s_file_path}`)}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -133,7 +116,7 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
           <div className={styles.viewRow}>
             <div className={styles.viewLabel}>Country</div>
             <div className={styles.viewValue}>
-              <span>{esc(row.s_country)}</span>
+              <span className={styles.countryBadge}>{esc(row.s_country)}</span>
             </div>
           </div>
 
@@ -171,7 +154,7 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
                 <div className={styles.viewRow}>
                   <div className={styles.viewLabel}>Price / 1000 (USD)</div>
                   <div className={styles.viewValue}>
-                    <span style={{ fontWeight: 700, color: '#63b52f' }}>
+                    <span className={styles.cellPrice}>
                       ${parseFloat(row.n_price_per_1000).toFixed(2)}
                     </span>
                   </div>
@@ -196,7 +179,11 @@ export default function ViewModal({ row, onClose, onOpenLightbox }) {
                     <div className={styles.viewContactField}>
                       <span className={styles.vcLabel}>Email:</span>
                       <span className={styles.vcVal}>
-                        {c.s_email ? <a href={`mailto:${c.s_email}`}>{c.s_email}</a> : '—'}
+                        {c.s_email ? (
+                          <a href={`mailto:${c.s_email}`}>{c.s_email}</a>
+                        ) : (
+                          '—'
+                        )}
                       </span>
                     </div>
                     <div className={styles.viewContactField}>
