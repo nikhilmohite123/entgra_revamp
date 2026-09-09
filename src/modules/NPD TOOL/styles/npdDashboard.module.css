@@ -1,0 +1,105 @@
+.dashboardContainer {
+  margin-top: 5rem;
+  padding-bottom: 3rem;
+}
+
+.cardSection {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.cardHeader {
+  background-color: #2b6cb0;
+  color: #ffffff;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.chartTotalsHeader {
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.totalBlue {
+  color: rgba(54, 162, 235, 1);
+  font-weight: 700;
+}
+
+.totalGold {
+  color: rgba(218, 165, 32, 1);
+  font-weight: 700;
+}
+
+.totalGreen {
+  color: rgba(38, 185, 82, 1);
+  font-weight: 700;
+}
+
+.blueclass td, .blueclass {
+  color: #007bff !important;
+  font-weight: 700 !important;
+}
+
+.tableResponsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.tableDashboard {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tableDashboard th {
+  background-color: #f4f6f7;
+  color: #333;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+.tableDashboard td {
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tableDashboard tr:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.chartCanvasContainer {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer {
+    margin-top: 4rem;
+  }
+
+  .cardHeader h4 {
+    font-size: 1.1rem !important;
+  }
+}
