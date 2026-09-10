@@ -1,0 +1,455 @@
+/* =============================================
+   EPL Sample Portal — Modals Styles Module
+============================================= */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(0, 20, 60, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Base Modal Container */
+.modalContainer {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 20, 60, 0.25);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 26px 18px;
+  background: #001e55;
+  border-bottom: 3px solid #78aa28;
+  flex-shrink: 0;
+}
+
+.modalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 12px 2px 8px;
+  border-radius: 100px;
+  background: rgba(120, 170, 40, 0.18);
+  border: 1px solid rgba(120, 170, 40, 0.4);
+  color: #78aa28;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.modalBadge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #78aa28;
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* Modal Body */
+.modalBody {
+  overflow-y: auto;
+  padding: 24px 26px 10px;
+  flex: 1;
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Modal Footer */
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 26px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+/* Workflow Summary Strip */
+.wfSummary {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: #f0f4fc;
+  border: 1px solid #e6edf8;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.wfSummary strong {
+  color: #003c96;
+}
+
+/* Auto info notice */
+.autoStatusInfo {
+  padding: 10px 14px;
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.autoStatusInfo strong {
+  color: #14532d;
+}
+
+/* Form Controls */
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.optional {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  color: #0f172a;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #003c96;
+  box-shadow: 0 0 0 3px rgba(0, 60, 150, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 84px;
+  line-height: 1.5;
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.selectWrap select {
+  appearance: none;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.selectArrow {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+  font-size: 13px;
+}
+
+/* File Attachment Upload Label */
+.fileLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 16px;
+  border: 1.5px dashed #b8d4f6;
+  border-radius: 10px;
+  background: #f0f4fc;
+  color: #003c96;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.fileLabel:hover {
+  border-color: #003c96;
+  background: #e6edf8;
+}
+
+/* Detail Modal Sections */
+.detailSectionTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #003c96;
+  background: #f0f4fc;
+  border-left: 3px solid #78aa28;
+  padding: 6px 12px;
+  border-radius: 0 6px 6px 0;
+  margin: 16px 0 10px;
+}
+
+.detailSectionTitle:first-child {
+  margin-top: 0;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #f1f5f9;
+  font-size: 13px;
+}
+
+.detailRow.full {
+  grid-column: 1 / -1;
+}
+
+.detailLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailVal {
+  color: #1e293b;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.attachLink {
+  color: #003c96;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.attachLink:hover {
+  color: #78aa28;
+}
+
+/* Buttons */
+.btnCancel {
+  background: #ffffff;
+  color: #475569;
+  border: 1.5px solid #e2e8f0;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnCancel:hover {
+  background: #f1f5f9;
+}
+
+.btnSave {
+  background: #78aa28;
+  color: #ffffff;
+  border: none;
+  padding: 9px 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(120, 170, 40, 0.25);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnSave:hover {
+  background: #5a8a10;
+  transform: translateY(-1px);
+}
+
+.btnSave:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnLoaderSm {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Attachment Preview Modal */
+.attachModal {
+  max-width: 860px;
+  max-height: 92vh;
+}
+
+.attachBody {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.attachImg {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.attachFrame {
+  width: 100%;
+  height: 70vh;
+  border: none;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .modalHeader {
+    padding: 18px 20px;
+  }
+
+  .modalBody {
+    padding: 18px 20px;
+  }
+}

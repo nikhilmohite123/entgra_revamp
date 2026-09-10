@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/landingPage.module.css';
 import SvgSprite from '../components/SvgSprite';
 import IdeaHubHeader from '../components/IdeaHubHeader';
 import IdeaHubFooter from '../components/IdeaHubFooter';
-import { CATEGORY_LABELS, MODULE_LABELS } from '../constants/ideaHubConstants';
+import { CATEGORY_LABELS, MODULE_LABELS, BASE_URL } from '../constants/ideaHubConstants';
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Restore category from sessionStorage
-  const baseUrl=`http://192.168.1.3:9003/`;
+  const baseUrl = BASE_URL;
   useEffect(() => {
     try {
       const saved = JSON.parse(sessionStorage.getItem('selectedCategory') || 'null');

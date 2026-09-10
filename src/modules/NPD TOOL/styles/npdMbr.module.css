@@ -1,0 +1,164 @@
+.mbrContainer {
+  margin-top: 5rem;
+  padding-bottom: 3rem;
+  background-color: #f4f6f9;
+  min-height: 90vh;
+}
+
+.regionSelector {
+  display: flex;
+  gap: 35px;
+  justify-content: center;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.regionBtn {
+  padding: 10px 30px;
+  background: linear-gradient(to bottom, #4fc3e8, #2aa6d6);
+  border-radius: 10px;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid #1b8fbf;
+  box-shadow: 0 4px 0 #1b8fbf;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.regionBtn:hover {
+  background: linear-gradient(to bottom, #66d0f0, #35b3e0);
+}
+
+.regionBtnActive {
+  background: linear-gradient(to bottom, #1fa0cf, #0f7fb0) !important;
+  box-shadow: 0 2px 0 #0f7fb0 !important;
+  transform: translateY(2px);
+  color: #fff !important;
+}
+
+.cardSection {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.cardSection h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  margin-bottom: 15px;
+}
+
+.gridSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.tableMbr {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tableMbr th {
+  background: #2f6db3;
+  color: #ffffff;
+  padding: 10px 8px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tableMbr td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-weight: 500;
+}
+
+.blueclass td, .blueclass {
+  font-weight: 700 !important;
+  background-color: #e6f0ff !important;
+  color: #0066cc !important;
+}
+
+.criticalTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.criticalTable th {
+  background: #1f4e79;
+  color: #ffffff;
+  padding: 10px 8px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.criticalTable td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.chartBox {
+  border: 1px solid #ddd;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 280px;
+}
+
+.tableThumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: zoom-in;
+  border: 1px solid #ccc;
+  transition: transform 0.2s ease;
+}
+
+.tableThumb:hover {
+  transform: scale(1.1);
+}
+
+.imageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.zoomedImage {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+  .gridSplit {
+    grid-template-columns: 1fr;
+  }
+}

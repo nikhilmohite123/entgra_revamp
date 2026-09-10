@@ -1,0 +1,58 @@
+/* =============================================
+   EPL Sample Portal — Toast Notification Styles
+============================================= */
+
+.toastContainer {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 20, 60, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+  max-width: 340px;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toastSuccess {
+  background: #78aa28;
+}
+
+.toastError {
+  background: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .toastContainer {
+    bottom: 14px;
+    right: 14px;
+    left: 14px;
+  }
+
+  .toast {
+    max-width: none;
+  }
+}

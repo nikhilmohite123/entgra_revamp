@@ -24,8 +24,8 @@ const ACTIVE_MODULES = [
   { id: 'npd', name: 'NPD TOOL', path: '/bpmn/npdtrack_landing_page', icon: FileText, color: '#062B67', desc: 'New Product Development tracking console.' },
   { id: 'wcc', name: 'WORK COMPLETION CERTIFICATE', path: '/bpmn/work_complation', icon: FileText, color: '#062B67', desc: 'Generate and sign completion reports.' },
   { id: 'vendor', name: 'VENDOR ADVANCE PAYMENT', path: '/bpmn/vendor_form', icon: DollarSign, color: '#F59E0B', desc: 'Approve vendor advanced payment forms.' },
-  { id: 'idea', name: 'IDEA HUB', path: '/bpmn/idea-hub', icon: Lightbulb, color: '#63B52F', desc: 'Share ideas, comments, and project brainstorming.' },
-  { id: 'sample', name: 'SAMPLE REQUEST', path: '/bpmn/sample_list', icon: ClipboardList, color: '#062B67', desc: 'Request and track product trial samples.' }
+  { id: 'idea', name: 'IDEA HUB', path: '/idea_hub', icon: Lightbulb, color: '#63B52F', desc: 'Share ideas, comments, and project brainstorming.' },
+  { id: 'sample', name: 'SAMPLE REQUEST', path: '/sample_list', icon: ClipboardList, color: '#062B67', desc: 'Request and track product trial samples.' }
 ];
 
 const INACTIVE_MODULES = [

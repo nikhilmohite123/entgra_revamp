@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/toast.module.css';
 
 export default function Toast({ message, type = 'success' }) {
   if (!message) return null;

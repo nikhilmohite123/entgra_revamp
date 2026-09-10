@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/viewModal.module.css';
 import { MODULE_LABELS, buildRefNo, esc } from '../constants/ideaHubConstants';
 
 export default function ViewModal({ row, onClose, onOpenLightbox }) {

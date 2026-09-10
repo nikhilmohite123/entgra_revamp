@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/tablePage.module.css';
 import SvgSprite from '../components/SvgSprite';
 import IdeaHubHeader from '../components/IdeaHubHeader';
 import IdeaHubFooter from '../components/IdeaHubFooter';
@@ -14,7 +14,8 @@ import {
   CATEGORY_LABELS,
   COUNTRY_OPTIONS,
   buildRefNo,
-  esc
+  esc,
+  BASE_URL
 } from '../constants/ideaHubConstants';
 
 export default function TablePage() {
@@ -28,7 +29,7 @@ export default function TablePage() {
     title: `${currentModule} Innovation Ideas`
   };
 
-  const baseUrl="http://192.168.1.3:9003"
+  const baseUrl = BASE_URL;
   // State
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [allRows, setAllRows] = useState([]);
