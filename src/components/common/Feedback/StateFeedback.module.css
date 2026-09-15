@@ -1,0 +1,108 @@
+.feedbackWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  box-shadow: 0 2px 10px rgba(6, 43, 103, 0.04);
+  min-height: 260px;
+  width: 100%;
+}
+
+.iconWrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 16px;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.errorIcon {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.emptyIcon {
+  background: #eaf2fc;
+  color: #062b67;
+  border: 1px solid #d9e2ef;
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #14213d;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 0.88rem;
+  color: #718096;
+  max-width: 440px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  background: #062b67;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(6, 43, 103, 0.2);
+}
+
+.retryBtn:hover {
+  background: #042254;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(6, 43, 103, 0.3);
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  background: #63b52f;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(99, 181, 47, 0.25);
+}
+
+.actionBtn:hover {
+  background: #4e9624;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 181, 47, 0.35);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

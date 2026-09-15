@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import styles from '../styles/ideaHub.module.css';
-import { CATEGORY_LABELS, MODULE_LABELS } from '../constants/ideaHubConstants';
+import styles from '../styles/ideaHubHeader.module.css';
+import { CATEGORY_LABELS, MODULE_LABELS, BASE_URL } from '../constants/ideaHubConstants';
 import logo from '../Assests/epl-logo.png';
 
 
@@ -45,7 +45,7 @@ export default function IdeaHubHeader({ currentModule, selectedCategory, onAddEn
     });
 
     if (uid) {
-      fetch('/bpmn/api/innovations/userdetail', {
+      fetch(`${BASE_URL}/api/innovations/userdetail`, {
         headers: { 'x-uid': uid }
       })
         .then((res) => res.json())

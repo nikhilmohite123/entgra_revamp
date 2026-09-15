@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/formPage.module.css';
 import SvgSprite from '../components/SvgSprite';
 import IdeaHubHeader from '../components/IdeaHubHeader';
 import IdeaHubFooter from '../components/IdeaHubFooter';
 import {
   MODULE_LABELS,
   CATEGORY_LABELS,
-  COUNTRY_OPTIONS
+  COUNTRY_OPTIONS,
+  BASE_URL
 } from '../constants/ideaHubConstants';
 
 export default function FormPage() {
@@ -52,7 +53,7 @@ export default function FormPage() {
     { s_contact_name: '', s_phone: '', s_email: '' }
   ]);
 
-  const baseUrl=`http://192.168.1.3:9003`;
+  const baseUrl = BASE_URL;
 
   // Restore category & check commercial mode
   useEffect(() => {

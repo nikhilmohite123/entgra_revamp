@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from '../styles/ideaHub.module.css';
+import styles from '../styles/lightbox.module.css';
 
 export default function Lightbox({ src, onClose }) {
   useEffect(() => {

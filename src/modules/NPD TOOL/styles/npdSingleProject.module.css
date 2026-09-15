@@ -1,0 +1,426 @@
+/* NPD TOOL - Product Specification Sheet Styles
+   Palette aligned with Index/Landing Page:
+   Background: #f8fafc (var(--gray-50))
+   Primary Navy: #001e55 · #003c96
+   Accent Green: #78aa28
+   Neutral Borders: #e2e8f0
+*/
+
+.detailsPage {
+  background: #f8fafc;
+  min-height: calc(100vh - 68px);
+  padding: 32px 20px 60px;
+  font-family: 'DM Sans', Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.detailsContainer {
+  max-width: 880px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 36px 40px 44px;
+  box-shadow: 0 10px 30px rgba(0, 30, 85, 0.08);
+  box-sizing: border-box;
+}
+
+/* Back Button */
+.backBtn {
+  background: #f1f5f9;
+  color: #003c96;
+  border: 1px solid #cbd5e1;
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13.5px;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.backBtn:hover {
+  background: #003c96;
+  color: #ffffff;
+  border-color: #003c96;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 60, 150, 0.2);
+}
+
+/* Header Section */
+.headerSection {
+  background: linear-gradient(135deg, #001e55 0%, #003c96 60%, #0046b0 100%);
+  padding: 30px;
+  color: white;
+  position: relative;
+  border-radius: 14px;
+  border-left: 5px solid #78aa28;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 30, 85, 0.2);
+  margin-bottom: 24px;
+}
+
+.headerSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.headerContent {
+  position: relative;
+  z-index: 2;
+}
+
+.trackingTool {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: rgba(120, 170, 40, 0.22);
+  color: #e5f8b0;
+  border: 1px solid rgba(120, 170, 40, 0.45);
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+.projectId {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+  color: #cbd5e1;
+}
+
+.projectId span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.productTitle {
+  font-family: 'Rajdhani', 'DM Sans', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 14px 0 20px;
+  line-height: 1.25;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.specList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+}
+
+.specItem {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.specLabel {
+  font-weight: 700;
+  opacity: 0.95;
+  color: #cbd5e1;
+}
+
+.specValue {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Drawing Section */
+.drawingSection {
+  background: #ffffff;
+  padding: 0;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.drawingContainer {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  position: relative;
+  min-height: 260px;
+}
+
+.technicalDrawing {
+  width: 100%;
+  min-height: 240px;
+  background: linear-gradient(45deg, #f8fafc 25%, transparent 25%),
+              linear-gradient(-45deg, #f8fafc 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #f8fafc 75%),
+              linear-gradient(-45deg, transparent 75%, #f8fafc 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.drawingImage {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  display: block;
+  margin: 10px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.drawingPlaceholder {
+  text-align: center;
+  color: #64748b;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Sections & Typography */
+.sectionTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #001e55;
+  margin-bottom: 14px;
+  border-bottom: 2px solid #78aa28;
+  padding-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.businessImpact {
+  margin-bottom: 28px;
+}
+
+.impactText {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #334155;
+  text-align: justify;
+  background: #f0f4fc;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #003c96;
+  margin: 0;
+}
+
+.projectDetailsSection {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #78aa28;
+}
+
+.detailItem {
+  margin-bottom: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.detailItem:last-child {
+  margin-bottom: 0;
+}
+
+.detailLabel {
+  font-weight: 700;
+  color: #001e55;
+  min-width: 170px;
+}
+
+.detailValue {
+  color: #475569;
+  flex: 1;
+}
+
+/* 2-Column Containers */
+.specsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.specSection {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #78aa28;
+}
+
+.specSection h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #001e55;
+  margin: 0 0 14px 0;
+}
+
+.specItemDetail {
+  margin-bottom: 10px;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.specItemDetail:last-child {
+  margin-bottom: 0;
+}
+
+.specItemDetail strong {
+  color: #001e55;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Contacts */
+.contactsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.contactSection {
+  background: linear-gradient(135deg, #001e55 0%, #003c96 100%);
+  color: white;
+  padding: 22px;
+  border-radius: 12px;
+  border-left: 4px solid #78aa28;
+  box-shadow: 0 6px 18px rgba(0, 30, 85, 0.15);
+}
+
+.contactSection h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 6px;
+  color: #ffffff;
+}
+
+.contactItem {
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contactItem:last-child {
+  margin-bottom: 0;
+}
+
+.contactLabel {
+  font-weight: 600;
+  opacity: 0.9;
+  color: #cbd5e1;
+  min-width: 60px;
+}
+
+.contactValue a {
+  color: #c4f377;
+  text-decoration: underline;
+}
+
+.contactValue a:hover {
+  color: #ffffff;
+}
+
+/* Loading & Error States */
+.loadingBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #003c96;
+  gap: 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 60, 150, 0.15);
+  border-top-color: #003c96;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .detailsContainer {
+    padding: 24px 18px;
+  }
+
+  .headerSection {
+    padding: 22px 18px;
+  }
+
+  .trackingTool {
+    position: static;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .productTitle {
+    font-size: 22px;
+  }
+
+  .specList {
+    grid-template-columns: 1fr;
+  }
+
+  .specsContainer,
+  .contactsContainer {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .detailItem {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .detailLabel {
+    min-width: unset;
+  }
+}

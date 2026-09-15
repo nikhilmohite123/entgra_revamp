@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/ideaHub.module.css';
-import { MODULE_LABELS, COUNTRY_OPTIONS } from '../constants/ideaHubConstants';
+import styles from '../styles/editModal.module.css';
+import { MODULE_LABELS, COUNTRY_OPTIONS, BASE_URL } from '../constants/ideaHubConstants';
 
 export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLightbox }) {
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
   const [contacts, setContacts] = useState([
     { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false }
   ]);
- const baseUrl="http://192.168.1.3:9003"
+  const baseUrl = BASE_URL;
 
   // Load entry details
   useEffect(() => {

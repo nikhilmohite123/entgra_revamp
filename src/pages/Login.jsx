@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/authService';
+
 import { Mail, Lock, ChevronRight } from 'lucide-react';
 import styles from './Login.module.css';
 
@@ -27,7 +27,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const baseUrl = "http://192.168.1.3:9003";
+      const baseUrl = "http://192.168.1.5:9003";
       
       const response = await fetch(`${baseUrl}/login`, {
         method: 'POST',
