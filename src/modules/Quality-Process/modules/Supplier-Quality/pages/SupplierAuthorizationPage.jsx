@@ -3,11 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import { useSupplierAuthorization } from '../hooks/useSupplierAuthorization';
 import SupplierVerificationForm from '../components/authorization/SupplierVerificationForm';
 import { SUPPLIER_STATUS } from '../constants/supplierConstants';
+import styles from './SupplierAuthorizationPage.module.css';
 
 export default function SupplierAuthorizationPage() {
   const [searchParams] = useSearchParams();
   
-  // Extracting query params matching legacy URL structure
   const nStatus = searchParams.get('n_status') || searchParams.get('status');
   const sNotiNo = searchParams.get('s_noti_no') || searchParams.get('ncp');
 
@@ -18,7 +18,7 @@ export default function SupplierAuthorizationPage() {
   const { email, handleChangeEmail, loading, error, handleSubmit } = useSupplierAuthorization(nStatus, sNotiNo);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-primary)' }}>
+    <div className={styles.pageWrapper}>
       {showForm ? (
         <SupplierVerificationForm
           email={email}
@@ -28,11 +28,11 @@ export default function SupplierAuthorizationPage() {
           onSubmit={handleSubmit}
         />
       ) : (
-        <div className="glass-card" style={{ maxWidth: '400px', width: '100%', margin: '0 auto', padding: '3rem', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.25rem', color: 'var(--success)', marginBottom: '1rem' }}>
+        <div className={`glass-card ${styles.successCard}`}>
+          <h2 className={styles.successTitle}>
             Thanks for submitting!
           </h2>
-          <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
+          <p className={`text-secondary ${styles.successText}`}>
             Supplier Response Already Exists or is not pending verification.
           </p>
         </div>
