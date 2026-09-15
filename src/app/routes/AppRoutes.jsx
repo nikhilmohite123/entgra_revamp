@@ -9,6 +9,8 @@ import Main from '../../pages/main';
 // Import only existing module routes
 
 import { IdeahubRoutes } from '../../modules/idea-hub';
+import { QualityProcessRoutes } from '../../modules/Quality-Process/routes/QualityProcessRoutes';
+import SupplierAuthorizationPage from '../../modules/Quality-Process/modules/Supplier-Quality/pages/SupplierAuthorizationPage';
 import { NpdRoutes } from '../../modules/NPD TOOL';
 
 // Protected Route checks localStorage validation
@@ -33,6 +35,8 @@ export default function AppRoutes() {
 
         {/* Standalone Modules (Dedicated Layout & Portal Views) */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
+
+
         <Route path="/npd_tool/*" element={<NpdRoutes />} />
 
         {/* Backward-Compatible Redirects for Legacy / Direct NPD URLs */}
@@ -62,6 +66,7 @@ export default function AppRoutes() {
           <Route index element={<Navigate to="/main" replace />} />
          
           <Route path="idea_hub/*" element={<IdeahubRoutes />} />
+          <Route path="quality_process/*" element={<QualityProcessRoutes />} />
           <Route path="npd_tool/*" element={<NpdRoutes />} />
         </Route>
       </Route>
@@ -70,6 +75,8 @@ export default function AppRoutes() {
       <Route path="/auth" element={<AuthLayout />}>
         <Route index element={<Navigate to="/auth/login" replace />} />
         <Route path="login" element={<Login />} />
+        {/* External Standalone Routes */}
+        <Route path="supplier-verification" element={<SupplierAuthorizationPage />} />
       </Route>
 
       {/* Fallback routing */}

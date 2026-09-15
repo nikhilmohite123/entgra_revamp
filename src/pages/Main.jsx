@@ -15,7 +15,7 @@ const ACTIVE_MODULES = [
   { id: 'ehs', name: 'EHS PORTAL', path: '/bpmn/ehs/', icon: Layers, color: '#63B52F', desc: 'Environment, Health, and Safety metrics.' },
   { id: 'ot', name: 'OVERTIME PROCESS', path: '/bpmn/ot_main', icon: Clock, color: '#F59E0B', desc: 'Record and approve operational overtime.' },
   { id: 'phoenix', name: 'PHOENIX PROCESS', path: '/bpmn/phoenix-project-list', icon: Activity, color: '#062B67', desc: 'Project re-engineering workflow console.' },
-  { id: 'quality', name: 'QUALITY PROCESS', path: '/bpmn/quality_main', icon: CheckCircle, color: '#63B52F', desc: 'Audit logs, reports, and QA checklists.' },
+  { id: 'quality', name: 'QUALITY PROCESS', path: '/quality_process', icon: CheckCircle, color: '#63B52F', desc: 'Audit logs, reports, and QA checklists.' },
   { id: 'hmp_gmp', name: 'HMP & GMP', isSplit: true, path1: 'https://entgra.eplglobal.com/epdms/out/out.ViewFolder.php?folderid=43&showtree=1', path2: 'https://entgra.eplglobal.com/epdms/out/out.ViewFolder.php?folderid=64', icon: HardDrive, color: '#062B67', desc: 'Access standard HMP and GMP folder systems.' },
   { id: 'cni', name: 'C&I MODULE', path: '/bpmn/CNI_Module', icon: Calendar, color: '#062B67', desc: 'Creativity and Innovation tracker board.' },
   { id: 'monthly', name: 'MONTHLY ACTIVITIES', path: '/bpmn/mainAccountpg', icon: BarChart3, color: '#062B67', desc: 'Manage accounting tasks and monthly sheets.' },
