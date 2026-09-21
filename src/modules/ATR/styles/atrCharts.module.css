@@ -1,0 +1,315 @@
+/* =============================================
+   ATR Charts & Analytics Page Styles
+   Matching EPL Idea Hub & NPD Tool Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.chartsPageContainer {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+}
+
+.mainContainer {
+  flex: 1;
+  padding: 1.5rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Top Bar Filter & Stats Header */
+.topBar {
+  background: #ffffff;
+  padding: 1.25rem 1.75rem;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.selectWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 280px;
+}
+
+.selectLabel {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #001e55;
+  white-space: nowrap;
+}
+
+.selectInput {
+  flex: 1;
+  padding: 0.55rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.selectInput:focus {
+  border-color: #78aa28;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(120, 170, 40, 0.15);
+}
+
+/* Stat Pills */
+.statPills {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.statPill {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 110px;
+  padding: 0.5rem 1.25rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.statPill:hover {
+  transform: translateY(-4px);
+}
+
+.statPillOpen {
+  background: linear-gradient(135deg, #003c96, #002870);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 60, 150, 0.25);
+}
+
+.statPillOpen:hover {
+  box-shadow: 0 8px 18px rgba(0, 60, 150, 0.35);
+}
+
+.statPillClosed {
+  background: linear-gradient(135deg, #78aa28, #5a8a10);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(120, 170, 40, 0.25);
+}
+
+.statPillClosed:hover {
+  box-shadow: 0 8px 18px rgba(120, 170, 40, 0.35);
+}
+
+.statPillTotal {
+  background: linear-gradient(135deg, #001e55, #003c96);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 30, 85, 0.25);
+}
+
+.statPillTotal:hover {
+  box-shadow: 0 8px 18px rgba(0, 30, 85, 0.35);
+}
+
+.statLabel {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.statValue {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.logoImg {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* 2x2 Analytics Dashboard Grid */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.dashboardCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s ease;
+}
+
+.dashboardCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 28, 80, 0.12);
+}
+
+.cardHeader {
+  background: linear-gradient(135deg, #001e55 0%, #002870 100%);
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.9rem 1.5rem;
+  letter-spacing: 0.4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #78aa28;
+}
+
+.headerLink {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+}
+
+.headerLink:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+
+.chartContainer {
+  position: relative;
+  flex: 1;
+  padding: 1.5rem;
+  min-height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartContainer canvas {
+  max-height: 300px !important;
+  width: 100% !important;
+}
+
+.tableContainer {
+  padding: 1.25rem;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+/* Summary Table */
+.summaryTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.summaryTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #f1f5f9;
+  z-index: 1;
+}
+
+.summaryTable th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 700;
+  color: #001e55;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.summaryTable td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.summaryTable tbody tr:hover {
+  background-color: #eef6d6;
+}
+
+.badgePlant {
+  font-weight: 700;
+  color: #001e55;
+}
+
+.badgeTotal {
+  background-color: #e6edf8;
+  color: #003c96;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.badgeOpen {
+  background-color: #fee2e2;
+  color: #dc2626;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.badgeClose {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .statPills {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,230 @@
+/* =============================================
+   ATR Dashboard Styles
+   Matching EPL Idea Hub & NPD Tool Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.dashboardWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  color: #0f172a;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 1.5rem 2rem 3.5rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.topLogoRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 0 1rem;
+}
+
+.mainLogo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.mainLogo:hover {
+  transform: scale(1.04);
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.imageContainer img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 30, 85, 0.12);
+  border: 1px solid #e2e8f0;
+  object-fit: cover;
+}
+
+.cardsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.headingg {
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(135deg, #001e55 0%, #003c96 50%, #78aa28 100%);
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 30, 85, 0.18);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.cardCustom {
+  width: 220px;
+  height: 240px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.cardCustom:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 60, 150, 0.18);
+  border-color: #78aa28;
+}
+
+.cardCustom img {
+  height: 90px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.cardCustom:hover img {
+  transform: scale(1.08);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #001e55;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.cardButton {
+  width: 100%;
+}
+
+.cardBtn {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  background-color: #78aa28;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(120, 170, 40, 0.3);
+  transition: all 0.2s ease;
+}
+
+.cardBtn:hover {
+  background-color: #5a8a10;
+  box-shadow: 0 4px 14px rgba(120, 170, 40, 0.4);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .imageContainer img {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cardContainer {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .cardCustom {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .headingg {
+    font-size: 22px;
+    padding: 10px 14px;
+  }
+
+  .mainLogo {
+    height: 44px;
+    margin: 5px auto;
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 1rem 1rem 2rem;
+  }
+
+  .headingg {
+    font-size: 19px;
+  }
+
+  .cardCustom img {
+    height: 75px;
+  }
+
+  .cardTitle {
+    font-size: 1.05rem;
+  }
+}

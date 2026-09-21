@@ -1,0 +1,356 @@
+/* =============================================
+   ATR CSV/Excel Upload Page Styles
+   Matching EPL Idea Hub & NPD Tool Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.pageContainer {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentWrapper {
+  flex: 1;
+  padding: 1.5rem 2rem 3rem;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Left Sidebar - Upload Card */
+.uploadCard {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.uploadTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #001e55;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.fileInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.fileInputLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.fileInput {
+  width: 100%;
+  padding: 0.55rem;
+  background-color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.fileInput:focus {
+  border-color: #78aa28;
+}
+
+.btnUpload {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background-color: #78aa28;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(120, 170, 40, 0.3);
+}
+
+.btnUpload:hover {
+  background-color: #5a8a10;
+  box-shadow: 0 4px 14px rgba(120, 170, 40, 0.4);
+  transform: translateY(-1px);
+}
+
+.btnUpload:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.sampleDownloadSection {
+  font-size: 0.85rem;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: #f0fdf4;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border: 1px dashed #86efac;
+}
+
+.btnDownloadSample {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #003c96;
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.82rem;
+  width: fit-content;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+  border: none;
+}
+
+.btnDownloadSample:hover {
+  background-color: #002870;
+  transform: translateY(-1px);
+}
+
+/* Warning Guidelines Div */
+.warningDiv {
+  background-color: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: 10px;
+  padding: 1rem;
+  color: #991b1b;
+  font-size: 0.82rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.warningHeader {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.warningList {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.warningList li {
+  line-height: 1.4;
+}
+
+/* Right Column - Table Panel */
+.tablePanel {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.panelHeader {
+  background: linear-gradient(135deg, #001e55 0%, #002870 100%);
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #78aa28;
+}
+
+.panelTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.searchBar {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  outline: none;
+  color: #0f172a;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.searchBar:focus {
+  border-color: #78aa28;
+  box-shadow: 0 0 0 3px rgba(120, 170, 40, 0.15);
+}
+
+.btnExportExcel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #78aa28;
+  color: #ffffff;
+  padding: 0.45rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(120, 170, 40, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btnExportExcel:hover {
+  background-color: #5a8a10;
+  transform: translateY(-1px);
+}
+
+.panelBody {
+  padding: 1.25rem;
+}
+
+.tableResponsive {
+  overflow-x: auto;
+  max-height: 65vh;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.dataTable thead {
+  position: sticky;
+  top: 0;
+  background-color: #001e55;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.dataTable th {
+  padding: 0.75rem 0.9rem;
+  font-weight: 600;
+  border-bottom: 2px solid #78aa28;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dataTable td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-right: 1px solid #f1f5f9;
+  vertical-align: top;
+  line-height: 1.4;
+}
+
+.dataTable tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.dataTable tbody tr:hover {
+  background-color: #eef6d6;
+}
+
+/* Specific minimum column widths */
+.colObservation {
+  min-width: 280px;
+}
+
+.colActionPlanned {
+  min-width: 280px;
+}
+
+.colBroadTheme {
+  min-width: 220px;
+}
+
+/* Status level badge colors */
+.badgeSendBack {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.badgeNotStarted {
+  color: #ea580c;
+  font-weight: 700;
+}
+
+.badgeDeptHead {
+  color: #0284c7;
+  font-weight: 700;
+}
+
+.badgeUnitFinHead {
+  color: #65a30d;
+  font-weight: 700;
+}
+
+.badgeUnitHead {
+  color: #003c96;
+  font-weight: 700;
+}
+
+.badgeCompleted {
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2.5rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .layoutGrid {
+    grid-template-columns: 1fr;
+  }
+}

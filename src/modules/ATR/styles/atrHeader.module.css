@@ -1,0 +1,361 @@
+/* =============================================
+   ATR Portal — Header Styles
+   Matching EPL Idea Hub & NPD Tool Design System
+   Brand Colors: Navy #001e55 / #003c96 · Green #78aa28 · Teal #3c8c50
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 68px;
+  background: #001e55;
+  border-bottom: 3px solid #78aa28;
+  box-shadow: 0 4px 20px rgba(0, 28, 80, 0.25);
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.headerInner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Left Section: Home Button + Logo + Title */
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.homeBtn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.homeBtn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.logoBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.logoImg {
+  height: 42px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.logoDivider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.logoTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #4a90d9 0%, #78aa28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  /* text-transform: lowercase; */
+}
+
+/* Center / Navigation Links */
+.headerNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 auto;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.navLinkActive {
+  background: rgba(120, 170, 40, 0.25);
+  color: #ffffff;
+  border: 1px solid rgba(120, 170, 40, 0.5);
+  font-weight: 600;
+}
+
+.navLinkActive:hover {
+  background: rgba(120, 170, 40, 0.35);
+  color: #ffffff;
+}
+
+/* Right Section: Avatar Profile */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatarTrigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  padding: 4px 10px 4px 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.avatarTrigger:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.avatarCircle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0046b0, #78aa28);
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.avatarInlineInfo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.avatarInlineName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.avatarInlineLoc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.avatarCaret {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.avatarCaretOpen {
+  transform: rotate(180deg);
+}
+
+.avatarDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 28px rgba(0, 20, 60, 0.18);
+  padding: 14px 16px;
+  min-width: 230px;
+  z-index: 300;
+  animation: fadeUp 0.18s ease both;
+}
+
+.avatarDdRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.avatarDdCircle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0046b0, #78aa28);
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.avatarDdName {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.avatarDdUid {
+  font-size: 11px;
+  color: #94a3b8;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+.avatarDdDivider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 8px 0;
+}
+
+.avatarDdDetail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: #334155;
+  padding: 4px 0;
+}
+
+.avatarDdLabel {
+  color: #94a3b8;
+  font-size: 11.5px;
+  font-weight: 500;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.logoutBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #fca5a5;
+  color: #991b1b;
+}
+
+/* Mobile Toggle */
+.mobileMenuToggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 4px;
+  cursor: pointer;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .headerNavLinks {
+    display: none;
+  }
+  .mobileMenuToggle {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .avatarInlineInfo,
+  .avatarCaret {
+    display: none;
+  }
+  .headerInner {
+    padding: 0 14px;
+  }
+  .logoTitle {
+    font-size: 18px;
+  }
+}

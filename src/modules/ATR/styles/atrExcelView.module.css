@@ -1,0 +1,338 @@
+/* =============================================
+   ATR Excel View / Data Export Page Styles
+   Matching EPL Idea Hub & NPD Tool Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.excelPageContainer {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContainer {
+  flex: 1;
+  padding: 1.5rem 2rem 3rem;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Page Header Banner */
+.pageHeader {
+  background: linear-gradient(135deg, #001e55 0%, #003c96 50%, #78aa28 100%);
+  color: #ffffff;
+  padding: 1.25rem 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 30, 85, 0.18);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: 0.4px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btnBack {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btnBack:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Main Data Card */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 28, 80, 0.08);
+  overflow: hidden;
+}
+
+.cardHeader {
+  background: linear-gradient(135deg, #001e55 0%, #002870 100%);
+  border-bottom: 2px solid #78aa28;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.tableTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: 0.3px;
+}
+
+.tableTitleIcon {
+  color: #78aa28;
+}
+
+.statusPill {
+  background-color: #78aa28;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.75rem;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.searchInput {
+  border-radius: 20px;
+  border: 1.5px solid #cbd5e1;
+  padding: 0.45rem 1rem 0.45rem 2.2rem;
+  font-size: 0.85rem;
+  outline: none;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  width: 220px;
+}
+
+.searchInput:focus {
+  border-color: #78aa28;
+  box-shadow: 0 0 0 3px rgba(120, 170, 40, 0.15);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.downloadBtn {
+  background-color: #78aa28;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 25px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(120, 170, 40, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.downloadBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(120, 170, 40, 0.45);
+  background-color: #5a8a10;
+  color: #ffffff;
+}
+
+.cardBody {
+  padding: 1.5rem;
+}
+
+/* Enhanced Table Container */
+.tableResponsive {
+  border-radius: 8px;
+  overflow: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  max-height: 70vh;
+  border: 1px solid #e2e8f0;
+}
+
+.tableResponsive::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.tableResponsive::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+.tableResponsive::-webkit-scrollbar-thumb {
+  background: #003c96;
+  border-radius: 8px;
+}
+
+.tableResponsive::-webkit-scrollbar-thumb:hover {
+  background: #001e55;
+}
+
+/* Table Elements */
+.excelTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.excelTable th,
+.excelTable td {
+  padding: 10px 12px;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f0;
+  border-right: 1px solid #f1f5f9;
+}
+
+.excelTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.excelTable th {
+  background-color: #001e55;
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom: 2px solid #78aa28;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+.excelTable tbody tr:hover {
+  background-color: #eef6d6;
+  transition: background-color 0.15s ease;
+}
+
+.excelTable tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+/* Specific Column Widths */
+.colPartyName { min-width: 180px; }
+.colFinPeriod { min-width: 120px; }
+.colGroup { min-width: 90px; }
+.colLocation { min-width: 100px; font-weight: 600; color: #001e55; }
+.colCount { min-width: 70px; text-align: center; }
+.colArea { min-width: 140px; }
+.colBroadTheme { min-width: 220px; }
+.colObservation { min-width: 320px; line-height: 1.4; }
+.colActionPlanned { min-width: 320px; line-height: 1.4; }
+.colRating { min-width: 90px; }
+.colDept { min-width: 130px; }
+.colResponsibility { min-width: 160px; font-weight: 500; }
+.colTargetDate { min-width: 110px; white-space: nowrap; }
+
+/* Rating Badges */
+.ratingHigh {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+
+.ratingMedium {
+  color: #b45309;
+  background-color: #fef3c7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+
+.ratingLow {
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Table Footer / Info */
+.tableInfo {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerActions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .downloadBtn {
+    justify-content: center;
+  }
+}

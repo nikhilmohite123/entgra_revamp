@@ -1,0 +1,154 @@
+/* =============================================
+   ATR Modals Styles (Region, Trail, Upload)
+   Matching EPL Idea Hub & NPD Tool Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 30, 85, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background-color: #ffffff;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 20, 60, 0.25);
+  display: inline-block;
+  width: auto;
+  max-width: 580px;
+  border: 1px solid #e2e8f0;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px) scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.rowc {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.modalImage {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.dropdownContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 240px;
+}
+
+.dropdownGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dropdownTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #001e55;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.selectInput {
+  padding: 9px 12px;
+  font-size: 14px;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.selectInput:focus {
+  border-color: #78aa28;
+  box-shadow: 0 0 0 3px rgba(120, 170, 40, 0.15);
+}
+
+.selectInput:disabled {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #003c96;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.errorText {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 767px) {
+  .modalContent {
+    width: 95% !important;
+    padding: 20px;
+  }
+
+  .rowc {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .modalImage {
+    width: 130px;
+  }
+
+  .dropdownContainer {
+    width: 100%;
+    min-width: 0;
+  }
+}

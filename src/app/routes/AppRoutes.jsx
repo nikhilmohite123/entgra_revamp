@@ -10,6 +10,8 @@ import Main from '../../pages/main';
 
 import { IdeahubRoutes } from '../../modules/idea-hub';
 import { NpdRoutes } from '../../modules/NPD TOOL';
+import { OvertimeRoutes } from '../../modules/Overtime';
+import { AtrRoutes } from '../../modules/ATR';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -34,6 +36,22 @@ export default function AppRoutes() {
         {/* Standalone Modules (Dedicated Layout & Portal Views) */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
         <Route path="/npd_tool/*" element={<NpdRoutes />} />
+        <Route path="overtime/*" element={<OvertimeRoutes />} />
+        <Route path="/atr/*" element={<AtrRoutes />} />
+
+        {/* Backward-Compatible Redirects for Legacy / Direct ATR URLs */}
+        <Route path="/bpmn/dashboard" element={<Navigate to="/atr" replace />} />
+        <Route path="/atr_dashboard" element={<Navigate to="/atr" replace />} />
+        <Route path="/atrform" element={<Navigate to="/atr/atrform" replace />} />
+        <Route path="/bpmn/atrform" element={<Navigate to="/atr/atrform" replace />} />
+        <Route path="/charts" element={<Navigate to="/atr/charts" replace />} />
+        <Route path="/bpmn/charts" element={<Navigate to="/atr/charts" replace />} />
+        <Route path="/uploadCSVfile" element={<Navigate to="/atr/uploadCSVfile" replace />} />
+        <Route path="/uploadcsvfile" element={<Navigate to="/atr/uploadCSVfile" replace />} />
+        <Route path="/bpmn/uploadCSVfile" element={<Navigate to="/atr/uploadCSVfile" replace />} />
+        <Route path="/excel_view" element={<Navigate to="/atr/excel_view" replace />} />
+        <Route path="/excel_download" element={<Navigate to="/atr/excel_download" replace />} />
+        <Route path="/bpmn/excel_view" element={<Navigate to="/atr/excel_view" replace />} />
 
         {/* Backward-Compatible Redirects for Legacy / Direct NPD URLs */}
         <Route path="/npdtrack" element={<Navigate to="/npd_tool/npdtrack" replace />} />
@@ -57,12 +75,33 @@ export default function AppRoutes() {
         <Route path="/bpmn/idea-hub" element={<Navigate to="/idea_hub" replace />} />
         <Route path="/idea-hub/*" element={<Navigate to="/idea_hub" replace />} />
 
+
+          {/* Backward-Compatible Redirects for Legacy / Direct Overtime URLs */}
+        <Route path="/ot_main" element={<Navigate to="/overtime" replace />} />
+        <Route path="/bpmn/ot_main" element={<Navigate to="/overtime" replace />} />
+        <Route path="/ot_requisition" element={<Navigate to="/overtime/requisition" replace />} />
+        <Route path="/bpmn/ot_requisition" element={<Navigate to="/overtime/requisition" replace />} />
+        <Route path="/ot_fixour_data" element={<Navigate to="/overtime/fixhour" replace />} />
+        <Route path="/bpmn/ot_fixour_data" element={<Navigate to="/overtime/fixhour" replace />} />
+        <Route path="/ot_report" element={<Navigate to="/overtime/report" replace />} />
+        <Route path="/bpmn/ot_report" element={<Navigate to="/overtime/report" replace />} />
+        <Route path="/ot_master" element={<Navigate to="/overtime/master" replace />} />
+        <Route path="/bpmn/ot_master" element={<Navigate to="/overtime/master" replace />} />
+        <Route path="/ot_approvaldetailview" element={<Navigate to="/overtime/detail" replace />} />
+        <Route path="/bpmn/ot_approvaldetailview" element={<Navigate to="/overtime/detail" replace />} />
+        <Route path="/ot_detailview" element={<Navigate to="/overtime/detail" replace />} />
+        <Route path="/bpmn/ot_detailview" element={<Navigate to="/overtime/detail" replace />} />
+        <Route path="/employee_process_data" element={<Navigate to="/overtime/process" replace />} />
+        <Route path="/bpmn/employee_process_data" element={<Navigate to="/overtime/process" replace />} />
+
         {/* Main Layout Wrapping Modules */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/main" replace />} />
          
           <Route path="idea_hub/*" element={<IdeahubRoutes />} />
           <Route path="npd_tool/*" element={<NpdRoutes />} />
+            <Route path="overtime/*" element={<OvertimeRoutes />} />
+          <Route path="atr/*" element={<AtrRoutes />} />
         </Route>
       </Route>
 
