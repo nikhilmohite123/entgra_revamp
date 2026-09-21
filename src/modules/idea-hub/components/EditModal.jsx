@@ -32,7 +32,7 @@ export default function EditModal({ id, onClose, onSuccess, showToast, onOpenLig
   const [contacts, setContacts] = useState([
     { n_cont_id: null, s_contact_name: '', s_phone: '', s_email: '', _removed: false }
   ]);
- const baseUrl="http://192.168.1.3:9003"
+ const baseUrl=""
 
   // Load entry details
   useEffect(() => {

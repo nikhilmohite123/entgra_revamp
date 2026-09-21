@@ -28,7 +28,7 @@ export default function TablePage() {
     title: `${currentModule} Innovation Ideas`
   };
 
-  const baseUrl="http://192.168.1.3:9003"
+  const baseUrl=""
   // State
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [allRows, setAllRows] = useState([]);

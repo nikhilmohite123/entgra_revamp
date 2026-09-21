@@ -11,7 +11,7 @@ export default function LandingPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Restore category from sessionStorage
-  const baseUrl=`http://192.168.1.3:9003/`;
+  const baseUrl=``;
   useEffect(() => {
     try {
       const saved = JSON.parse(sessionStorage.getItem('selectedCategory') || 'null');

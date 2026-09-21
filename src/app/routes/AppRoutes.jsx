@@ -9,6 +9,7 @@ import Main from '../../pages/main';
 // Import only existing module routes
 import { Module1Routes } from '../../modules/module1';
 import { IdeahubRoutes } from '../../modules/idea-hub';
+import { CniRoutes } from '../../modules/cni';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -32,8 +33,9 @@ export default function AppRoutes() {
 
         {/* Idea Hub Standalone Portal Routes */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
- 
-     
+        
+        {/* CNI Standalone Portal Routes */}
+        <Route path="/cni/*" element={<CniRoutes />} />
 
         {/* Main Layout Wrapping Modules */}
         <Route path="/" element={<MainLayout />}>

@@ -1,0 +1,5 @@
+/* CNI Foundation Styles */
+.cni-container {
+  display: flex;
+  flex-direction: column;
+}

@@ -3,7 +3,7 @@ import styles from '../styles/ideaHub.module.css';
 
 export default function DeleteModal({ isOpen, targetId, onClose, onSuccess, showToast }) {
   const [loading, setLoading] = useState(false);
- const baseUrl="http://192.168.1.3:9003"
+ const baseUrl=""
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && !loading) onClose();

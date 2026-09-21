@@ -17,7 +17,7 @@ const ACTIVE_MODULES = [
   { id: 'phoenix', name: 'PHOENIX PROCESS', path: '/bpmn/phoenix-project-list', icon: Activity, color: '#062B67', desc: 'Project re-engineering workflow console.' },
   { id: 'quality', name: 'QUALITY PROCESS', path: '/bpmn/quality_main', icon: CheckCircle, color: '#63B52F', desc: 'Audit logs, reports, and QA checklists.' },
   { id: 'hmp_gmp', name: 'HMP & GMP', isSplit: true, path1: 'https://entgra.eplglobal.com/epdms/out/out.ViewFolder.php?folderid=43&showtree=1', path2: 'https://entgra.eplglobal.com/epdms/out/out.ViewFolder.php?folderid=64', icon: HardDrive, color: '#062B67', desc: 'Access standard HMP and GMP folder systems.' },
-  { id: 'cni', name: 'C&I MODULE', path: '/bpmn/CNI_Module', icon: Calendar, color: '#062B67', desc: 'Creativity and Innovation tracker board.' },
+  { id: 'cni', name: 'C&I MODULE', path: '/cni/', icon: Calendar, color: '#062B67', desc: 'Creativity and Innovation tracker board.' },
   { id: 'monthly', name: 'MONTHLY ACTIVITIES', path: '/bpmn/mainAccountpg', icon: BarChart3, color: '#062B67', desc: 'Manage accounting tasks and monthly sheets.' },
   { id: 'atr', name: 'ATR PORTAL', path: '/bpmn/dashboard', icon: Database, color: '#63B52F', desc: 'Database telemetry and ATR system reviews.' },
   { id: 'danville', name: 'CUSTOMER COMPLAINT DANVILLE', path: '/bpmn/cust_complaint', icon: ShieldAlert, color: '#DC3545', desc: 'Review Danville customer complaints.' },

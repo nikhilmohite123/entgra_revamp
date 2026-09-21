@@ -52,7 +52,7 @@ export default function FormPage() {
     { s_contact_name: '', s_phone: '', s_email: '' }
   ]);
 
-  const baseUrl=`http://192.168.1.3:9003`;
+  const baseUrl=``;
 
   // Restore category & check commercial mode
   useEffect(() => {

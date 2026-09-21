@@ -747,7 +747,199 @@ body {
   position: static !important;
 }
 
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.modal-body {
+  padding: 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
 
+.modal-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  background: rgba(23, 25, 38, 0.4);
+}
 
+/* Auth Layout */
+.auth-wrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: var(--bg-primary);
+}
 
+@media(min-width: 992px) {
+  .auth-wrapper {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+.auth-sidebar {
+  display: none;
+  background: linear-gradient(135deg, #090a10 0%, #151726 100%);
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem;
+  border-right: 1px solid var(--border-glass);
+  overflow: hidden;
+}
+
+@media(min-width: 992px) {
+  .auth-sidebar {
+    display: flex;
+  }
+}
+
+.auth-sidebar-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+  filter: blur(60px);
+}
+
+.auth-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.auth-form-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 10px 30px rgba(6, 43, 103, 0.08);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 43, 103, 0.1);
+}
+
+/* Nav toggle button inside header */
+.header-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+
+.header-toggle-btn:hover {
+  color: white;
+  border-color: var(--border-glass-hover);
+}
+
+/* =============================================
+   Google Translate Styling for Idea Hub
+============================================= */
+#google_translate_element {
+  display: inline-block;
+}
+
+.goog-te-combo {
+  background: #0b2f6b !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 6px !important;
+  padding: 5px 10px !important;
+  font-size: 13px !important;
+  outline: none !important;
+  cursor: pointer;
+  min-width: 150px;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.goog-te-combo option {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+/* Remove extra Google branding text and links */
+.goog-te-gadget {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.goog-te-gadget span,
+.goog-te-gadget img {
+  display: none !important;
+}
+
+.goog-te-gadget-simple {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px !important;
+  padding: 4px 10px !important;
+  cursor: pointer;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 12.5px !important;
+}
+
+/* Hide top Google Translate banner frame */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+/* Override Bootstrap 3 Root Scaling */
+html {
+  font-size: 16px !important;
+}
+
+body { font-size: 15px !important; }
