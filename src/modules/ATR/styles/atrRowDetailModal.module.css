@@ -1,0 +1,804 @@
+/* =============================================
+   ATR Row Detail Modal Styles
+   Matching EPL ATR Portal Design System
+============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 18, 50, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalDialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1000px;
+  height: 88vh;
+  max-height: 88vh;
+  border-radius: 16px;
+  box-shadow: 0 25px 60px -12px rgba(0, 30, 85, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(18px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Modal Header */
+.modalHeader {
+  background: linear-gradient(135deg, #001e55 0%, #003380 50%, #004bba 100%);
+  color: #ffffff;
+  padding: 1.15rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #78aa28;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.modalHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.headerIconWrap {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #78aa28;
+  flex-shrink: 0;
+}
+
+.modalTitleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalTitle {
+  margin: 0;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modalSubtitle {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 2px;
+}
+
+.idBadge {
+  background: #78aa28;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 100px;
+  box-shadow: 0 2px 6px rgba(120, 170, 40, 0.35);
+}
+
+.modalHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modalCloseBtn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  background: rgba(239, 68, 68, 0.9);
+  border-color: rgba(239, 68, 68, 0.9);
+  transform: rotate(90deg);
+}
+
+/* Navigation Tabs inside modal */
+.modalNavTabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.65rem 1.5rem 0.5rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.tabItem {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tabItem:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.tabItemActive {
+  background: #001e55 !important;
+  border-color: #001e55 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0, 30, 85, 0.25);
+}
+
+/* Modal Body with explicit scroll */
+.modalBody {
+  flex: 1 1 0%;
+  min-height: 0;
+  height: 100%;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 1.25rem 1.5rem 2rem;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-sizing: border-box;
+}
+
+/* Custom Visible Scrollbar for Modal Body */
+.modalBody::-webkit-scrollbar {
+  width: 9px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 6px;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: #003c96;
+  border-radius: 6px;
+}
+
+.modalBody::-webkit-scrollbar-thumb:hover {
+  background: #001e55;
+}
+
+/* Loading Banner */
+.loadingBanner {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Top Banner Summary Strip */
+.topSummaryStrip {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.summaryVal {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Section Box */
+.sectionCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.sectionHeader {
+  background: #f1f5f9;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sectionHeaderTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #001e55;
+  letter-spacing: 0.3px;
+}
+
+.sectionIcon {
+  color: #003c96;
+}
+
+.sectionBody {
+  padding: 1.25rem;
+}
+
+/* Key-Value Grids */
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+.dataGrid2Col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+.dataField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.fieldLabel {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fieldValue {
+  font-size: 0.9rem;
+  color: #1e293b;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.fieldValueStrong {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #001e55;
+}
+
+/* Rich Content Card (Observation / Action Planned) */
+.richTextCard {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-left: 5px solid #003c96;
+  border-radius: 10px;
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.richTextCard:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.richTextCardPlanned {
+  background: #fdfdf9;
+  border: 1.5px solid #cbd5e1;
+  border-left: 5px solid #78aa28;
+  border-radius: 10px;
+  padding: 1.15rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.richTextCardPlanned:hover {
+  border-color: #78aa28;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(120, 170, 40, 0.1);
+}
+
+.richTextHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.richTextLabel {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #001e55;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.richTextLabelPlanned {
+  color: #3b610c;
+}
+
+.copyBtn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.copyBtn:hover {
+  background: #003c96;
+  color: #ffffff;
+  border-color: #003c96;
+}
+
+.richTextContent {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #1e293b;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-weight: 400;
+}
+
+/* Remarks Grid */
+.remarksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.remarkCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.remarkRole {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.remarkText {
+  font-size: 0.9rem;
+  color: #0f172a;
+  line-height: 1.5;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  min-height: 48px;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Integrated Trail Timeline */
+.trailTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.trailTimeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 15px;
+  bottom: 15px;
+  width: 2px;
+  background: #e2e8f0;
+}
+
+.trailStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+}
+
+.trailStepIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #001e55;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  z-index: 1;
+  box-shadow: 0 0 0 4px #ffffff;
+}
+
+.trailStepContent {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.trailApprover {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.trailMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+/* Badges */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.statusCompleted {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.statusPending {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.statusProcess {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.statusSendBack {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.ratingHigh {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  display: inline-block;
+}
+
+.ratingMedium {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  display: inline-block;
+}
+
+.ratingLow {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  display: inline-block;
+}
+
+/* Attachment Pill */
+.attachmentPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #3730a3;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.attachmentPill:hover {
+  background: #e0e7ff;
+  border-color: #a5b4fc;
+}
+
+/* Complete Raw Fields Table */
+.allFieldsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.allFieldsTable td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.allFieldsRowEven {
+  background-color: #f8fafc;
+}
+
+.allFieldsKey {
+  width: 30%;
+  font-weight: 700;
+  color: #001e55;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-right: 1px solid #e2e8f0;
+  background-color: #f1f5f9;
+}
+
+.allFieldsVal {
+  color: #1e293b;
+  font-weight: 500;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Modal Footer */
+.modalFooter {
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.modalFooterLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modalFooterRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnActionTrail {
+  background: #003c96;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 60, 150, 0.2);
+}
+
+.btnActionTrail:hover {
+  background: #002870;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 60, 150, 0.3);
+}
+
+.btnActionEdit {
+  background: #78aa28;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(120, 170, 40, 0.25);
+}
+
+.btnActionEdit:hover {
+  background: #5a8a10;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(120, 170, 40, 0.35);
+}
+
+.btnClose {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnClose:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Responsiveness */
+@media (max-width: 860px) {
+  .dataGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modalBody {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .dataGrid,
+  .dataGrid2Col {
+    grid-template-columns: 1fr;
+  }
+  .topSummaryStrip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .modalFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .modalFooterLeft,
+  .modalFooterRight {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .btnActionTrail,
+  .btnActionEdit,
+  .btnClose {
+    flex: 1;
+    justify-content: center;
+  }
+}

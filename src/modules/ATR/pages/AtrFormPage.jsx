@@ -12,13 +12,15 @@ import {
   Clock,
   Edit,
   ClipboardList,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Eye
 } from 'lucide-react';
 import styles from '../styles/atrForm.module.css';
 import AtrHeader from '../components/AtrHeader';
 import AtrFooter from '../components/AtrFooter';
 import AtrAuditTrailModal from '../components/AtrAuditTrailModal';
 import AtrFileUploadModal from '../components/AtrFileUploadModal';
+import AtrRowDetailModal from '../components/AtrRowDetailModal';
 import atrToast from '../components/AtrToast';
 import {
   BASE_URL,
@@ -174,6 +176,7 @@ export default function AtrFormPage() {
   });
 
   // Table Data Lists
+  const [activeTab, setActiveTab] = useState('pending'); // 'pending' or 'completed'
   const [pendingList, setPendingList] = useState(INITIAL_PENDING_RECORDS);
   const [completedList, setCompletedList] = useState(INITIAL_COMPLETED_RECORDS);
   const [searchQuery, setSearchQuery] = useState('');
@@ -183,6 +186,100 @@ export default function AtrFormPage() {
   const [selectedAtrId, setSelectedAtrId] = useState('');
   const [trailData, setTrailData] = useState([]);
   const [fileModalOpen, setFileModalOpen] = useState(false);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedDetailRow, setSelectedDetailRow] = useState(null);
+
+  const handleRowClick = async (row) => {
+    // 1. Instantly display available row data in modal
+    setSelectedDetailRow({ ...row, loadingFullDetails: true });
+    setDetailModalOpen(true);
+
+    const atrId = row.n_Atr_id || row.id;
+    if (!atrId) {
+      setSelectedDetailRow({ ...row, loadingFullDetails: false });
+      return;
+    }
+
+    try {
+      // 2. Fetch full record details and audit trail in parallel
+      const [recordRes, trailRes] = await Promise.allSettled([
+        fetch(`${BASE_URL}/AtrRoute/get_ATR_by_id?n_Atr_id=${encodeURIComponent(atrId)}`).then((r) =>
+          r.ok ? r.json() : null
+        ),
+        fetch(`${BASE_URL}/AtrRoute/get_Atr_trail?n_Atr_id=${encodeURIComponent(atrId)}`).then((r) =>
+          r.ok ? r.json() : null
+        )
+      ]);
+
+      let fullRecord = {};
+      if (
+        recordRes.status === 'fulfilled' &&
+        Array.isArray(recordRes.value) &&
+        recordRes.value.length > 0
+      ) {
+        fullRecord = recordRes.value[0];
+      }
+
+      let processedTrail = [];
+      if (trailRes.status === 'fulfilled' && Array.isArray(trailRes.value) && trailRes.value.length > 0) {
+        processedTrail = trailRes.value.map((item, i, data) => {
+          let dueDays = 0;
+          if (i > 0) {
+            const currentDate = item.d_updated_date ? new Date(item.d_updated_date) : new Date();
+            const previousDate = data[i - 1].d_updated_date
+              ? new Date(data[i - 1].d_updated_date)
+              : new Date(data[i - 1].d_created_date);
+
+            if (previousDate) {
+              const diffTime = currentDate - previousDate;
+              dueDays = Math.floor(diffTime / (1000 * 3600 * 24));
+            }
+          }
+
+          const statusText =
+            item.s_activity === '0'
+              ? item.n_level === 5
+                ? 'Completed'
+                : 'Pending'
+              : item.s_activity === '-1'
+              ? 'Send Back'
+              : item.s_activity === '2'
+              ? `In Draft${item.s_sts ? ` (${item.s_sts})` : ''}`
+              : item.n_level === 1
+              ? 'Initiated'
+              : item.n_level >= 2 && item.n_level <= 4
+              ? 'Submitted'
+              : item.s_status || '';
+
+          const approvedDate =
+            i === 0
+              ? item.d_created_date
+                ? item.d_created_date.split(' ')[0]
+                : ''
+              : item.d_updated_date
+              ? item.d_updated_date.split(' ')[0]
+              : '';
+
+          return {
+            s_approver: item.s_approver || '',
+            s_status: statusText,
+            d_approved_date: approvedDate,
+            n_days: `${dueDays} days`
+          };
+        });
+      }
+
+      setSelectedDetailRow((prev) => ({
+        ...row,
+        ...fullRecord,
+        trail: processedTrail.length > 0 ? processedTrail : fullRecord.trail || row.trail || [],
+        loadingFullDetails: false
+      }));
+    } catch (err) {
+      console.error('Error fetching full ATR details:', err);
+      setSelectedDetailRow((prev) => ({ ...prev, loadingFullDetails: false }));
+    }
+  };
 
   // Table container refs for smooth scrolling controls
   const pendingTableRef = useRef(null);
@@ -534,8 +631,9 @@ export default function AtrFormPage() {
           });
 
           const level = parseInt(row.n_level, 10);
+          console.log(level,"level")
           const isApprover = uid === row.s_approver || loginId === row.s_approver || BYPASS_UIDS.includes(uid);
-
+         
           if (level === 1 && isApprover) {
             setVisibility({
               showAddBtn: true,
@@ -598,9 +696,9 @@ export default function AtrFormPage() {
               showUnitFinRemark: true,
               showUnitHeadRemark: true,
               showFileSection: true,
-              showSaveBtn: true,
-              showSubmitBtn: true,
-              showBackBtn: true,
+              showSaveBtn: false,
+              showSubmitBtn: false,
+              showBackBtn: false,
               disableSubmitBtn: false
             });
           }
@@ -668,16 +766,16 @@ export default function AtrFormPage() {
 
             const statusText =
               item.s_activity === '0'
-                ? item.n_level === '5'
+                ? item.n_level === 5
                   ? 'Completed'
                   : 'Pending'
                 : item.s_activity === '-1'
                 ? 'Send Back'
                 : item.s_activity === '2'
                 ? `In Draft${item.s_sts ? ` (${item.s_sts})` : ''}`
-                : item.n_level === '1'
+                : item.n_level === 1
                 ? 'Initiated'
-                : item.n_level >= '2' && item.n_level <= '4'
+                : item.n_level >= 2 && item.n_level <= 4
                 ? 'Submitted'
                 : item.s_status || '';
 
@@ -716,9 +814,9 @@ export default function AtrFormPage() {
    * Exports filtered ATR dataset to Excel format (matching legacy)
    */
   const handleExportExcel = () => {
-    const combined = [...pendingList, ...completedList];
-    if (combined.length === 0) {
-      atrToast.warning('No records to export');
+    const listToExport = activeTab === 'pending' ? filteredPending : filteredCompleted;
+    if (listToExport.length === 0) {
+      atrToast.warning(`No ${activeTab} records to export`);
       return;
     }
 
@@ -740,7 +838,7 @@ export default function AtrFormPage() {
       'Revised Target Date'
     ];
 
-    const rows = combined.map((row) => [
+    const rows = listToExport.map((row) => [
       row.n_level === '-1'
         ? 'Send Back'
         : row.n_level === '1'
@@ -779,7 +877,7 @@ export default function AtrFormPage() {
     const today = new Date();
     const formattedDate = `${String(today.getDate()).padStart(2, '0')}_${String(today.getMonth() + 1).padStart(2, '0')}_${today.getFullYear()}`;
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `ATR_current_status_report_${formattedDate}.csv`);
+    link.setAttribute('download', `ATR_${activeTab}_status_report_${formattedDate}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -939,6 +1037,37 @@ export default function AtrFormPage() {
                   Track and manage Action Taken Reports across plant locations
                 </span>
               </div>
+
+              {/* Pending / Completed Header Tab Switcher */}
+              <div className={styles.headerTabGroup} role="tablist" aria-label="ATR Status Filter">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === 'pending'}
+                  className={`${styles.tabNavBtn} ${activeTab === 'pending' ? styles.tabNavBtnActive : ''}`}
+                  onClick={() => setActiveTab('pending')}
+                >
+                  <Clock size={16} />
+                  <span>Pending</span>
+                  <span className={`${styles.tabNavBadge} ${activeTab === 'pending' ? styles.tabNavBadgeActivePending : ''}`}>
+                    {filteredPending.length}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === 'completed'}
+                  className={`${styles.tabNavBtn} ${activeTab === 'completed' ? styles.tabNavBtnActive : ''}`}
+                  onClick={() => setActiveTab('completed')}
+                >
+                  <CheckCircle2 size={16} />
+                  <span>Completed</span>
+                  <span className={`${styles.tabNavBadge} ${activeTab === 'completed' ? styles.tabNavBadgeActiveCompleted : ''}`}>
+                    {filteredCompleted.length}
+                  </span>
+                </button>
+              </div>
+
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ position: 'relative' }}>
                   <input
@@ -953,7 +1082,7 @@ export default function AtrFormPage() {
                 <button
                   type="button"
                   className={styles.btnSecondary}
-                  title="Export to Excel"
+                  title={`Export ${activeTab === 'pending' ? 'Pending' : 'Completed'} to Excel`}
                   onClick={handleExportExcel}
                   style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: '#1d6f42', color: '#fff', border: 'none' }}
                 >
@@ -973,276 +1102,326 @@ export default function AtrFormPage() {
             </div>
 
             {/* 1. Pending ATR Table Card */}
-            <div className={styles.card} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
-              <div className={styles.cardBody}>
-                <div className={styles.sectionHeaderRow}>
-                  <div className={styles.badgePending}>
-                    <Clock size={16} />
-                    <span>Pending ({filteredPending.length})</span>
+            {activeTab === 'pending' && (
+              <div className={styles.card} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+                <div className={styles.cardBody}>
+                  <div className={styles.sectionHeaderRow}>
+                    <div className={styles.badgePending}>
+                      <Clock size={16} />
+                      <span>Pending Records ({filteredPending.length})</span>
+                    </div>
+
+                    {/* Scroll controls */}
+                    <div className={styles.scrollControls}>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to first row"
+                        onClick={() => scrollToTop(pendingTableRef)}
+                      >
+                        <ChevronsUp size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to last row"
+                        onClick={() => scrollToBottom(pendingTableRef)}
+                      >
+                        <ChevronsDown size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to first column"
+                        onClick={() => scrollToFirstColumn(pendingTableRef)}
+                      >
+                        <ChevronsLeft size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to last column"
+                        onClick={() => scrollToLastColumn(pendingTableRef)}
+                      >
+                        <ChevronsRight size={16} />
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Scroll controls */}
-                  <div className={styles.scrollControls}>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to first row"
-                      onClick={() => scrollToTop(pendingTableRef)}
-                    >
-                      <ChevronsUp size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to last row"
-                      onClick={() => scrollToBottom(pendingTableRef)}
-                    >
-                      <ChevronsDown size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to first column"
-                      onClick={() => scrollToFirstColumn(pendingTableRef)}
-                    >
-                      <ChevronsLeft size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to last column"
-                      onClick={() => scrollToLastColumn(pendingTableRef)}
-                    >
-                      <ChevronsRight size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className={styles.tableResponsive} id="tbl_ATR_wrapper" ref={pendingTableRef}>
-                  <table className={styles.atrTable} id="tbl_ATR">
-                    <thead>
-                      <tr>
-                        <th className={styles.colAction}>Action</th>
-                        <th>Auditing Party Name</th>
-                        <th className={styles.colShort}>Financial Period</th>
-                        <th>Group</th>
-                        <th className={styles.colShort}>Location</th>
-                        <th>Count</th>
-                        <th>Area</th>
-                        <th className={styles.colBroadTheme}>Broad Theme</th>
-                        <th className={styles.colObservation}>Observation</th>
-                        <th className={styles.colActionPlanned}>Action Planned</th>
-                        <th>Rating</th>
-                        <th>Department</th>
-                        <th>Prime Responsibility</th>
-                        <th className={styles.colShort}>Target Date</th>
-                        <th className={styles.colShort}>Revised Target Date</th>
-                        <th>Approver</th>
-                        <th>Role</th>
-                        <th>ATR Trail</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredPending.length > 0 ? (
-                        filteredPending.map((row, idx) => (
-                          <tr key={idx}>
-                            <td className={styles.colAction}>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <button
-                                  type="button"
-                                  className="btn btn-sm btn-success"
-                                  style={{ padding: '4px 8px', borderRadius: '4px' }}
-                                  title="Edit ATR Record"
-                                  onClick={() => get_ATR_by_id(row.n_Atr_id)}
+                  <div className={styles.tableResponsive} id="tbl_ATR_wrapper" ref={pendingTableRef}>
+                    <table className={styles.atrTable} id="tbl_ATR">
+                      <thead>
+                        <tr>
+                          <th className={styles.colAction}>Action</th>
+                          <th>Auditing Party Name</th>
+                          <th className={styles.colShort}>Financial Period</th>
+                          <th>Group</th>
+                          <th className={styles.colShort}>Location</th>
+                          <th>Count</th>
+                          <th>Area</th>
+                          <th className={styles.colBroadTheme}>Broad Theme</th>
+                          <th className={styles.colObservation}>Observation</th>
+                          <th className={styles.colActionPlanned}>Action Planned</th>
+                          <th>Rating</th>
+                          <th>Department</th>
+                          <th>Prime Responsibility</th>
+                          <th className={styles.colShort}>Target Date</th>
+                          <th className={styles.colShort}>Revised Target Date</th>
+                          <th>Approver</th>
+                          <th>Role</th>
+                          <th>ATR Trail</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredPending.length > 0 ? (
+                          filteredPending.map((row, idx) => (
+                            <tr
+                              key={idx}
+                              className={styles.clickableRow}
+                              onClick={() => handleRowClick(row)}
+                              title="Click row to view complete readable details"
+                            >
+                              <td className={styles.colAction} onClick={(e) => e.stopPropagation()}>
+                                <div className={styles.actionBtnGroup}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm btn-success"
+                                    style={{ padding: '4px 8px', borderRadius: '4px' }}
+                                    title="Edit ATR Record"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      get_ATR_by_id(row.n_Atr_id);
+                                    }}
+                                  >
+                                    <Edit size={14} />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className={styles.btnActionView}
+                                    title="View Full Details"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleRowClick(row);
+                                    }}
+                                  >
+                                    <Eye size={14} />
+                                  </button>
+                                </div>
+                              </td>
+                              <td>{row.s_auditing_party_name || '—'}</td>
+                              <td>{row.s_financial_period || '—'}</td>
+                              <td>{row.s_group || '—'}</td>
+                              <td>
+                                <strong>{row.s_location || '—'}</strong>
+                              </td>
+                              <td>{row.n_count ?? '0'}</td>
+                              <td>{row.s_area || '—'}</td>
+                              <td className={styles.colBroadTheme}>{row.s_broadTheme || '—'}</td>
+                              <td className={styles.colObservation}>{row.s_observation || '—'}</td>
+                              <td className={styles.colActionPlanned}>{row.s_actionPlanned || '—'}</td>
+                              <td>
+                                <span
+                                  className={
+                                    row.s_rating === 'High'
+                                      ? styles.ratingHigh
+                                      : row.s_rating === 'Low'
+                                      ? styles.ratingLow
+                                      : styles.ratingMedium
+                                  }
                                 >
-                                  <Edit size={14} />
-                                </button>
-                              </div>
-                            </td>
-                            <td>{row.s_auditing_party_name || '—'}</td>
-                            <td>{row.s_financial_period || '—'}</td>
-                            <td>{row.s_group || '—'}</td>
-                            <td>
-                              <strong>{row.s_location || '—'}</strong>
-                            </td>
-                            <td>{row.n_count ?? '0'}</td>
-                            <td>{row.s_area || '—'}</td>
-                            <td className={styles.colBroadTheme}>{row.s_broadTheme || '—'}</td>
-                            <td className={styles.colObservation}>{row.s_observation || '—'}</td>
-                            <td className={styles.colActionPlanned}>{row.s_actionPlanned || '—'}</td>
-                            <td>
-                              <span
-                                className={
-                                  row.s_rating === 'High'
-                                    ? styles.ratingHigh
-                                    : row.s_rating === 'Low'
-                                    ? styles.ratingLow
-                                    : styles.ratingMedium
-                                }
-                              >
-                                {row.s_rating || 'Medium'}
-                              </span>
-                            </td>
-                            <td>{row.s_dept || '—'}</td>
-                            <td>{row.s_primeResponsibility || '—'}</td>
-                            <td>{row.s_targetDate || '—'}</td>
-                            <td>{row.s_revised_targetDate || '—'}</td>
-                            <td>{row.s_approver || '—'}</td>
-                            <td>{row.role || row.s_role || row.s_role_display || '—'}</td>
-                            <td>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <button
-                                  type="button"
-                                  className="btn btn-sm btn-success"
-                                  style={{ padding: '4px 8px', borderRadius: '4px' }}
-                                  title="View ATR Audit Trail"
-                                  onClick={() => get_Atr_trail(row.n_Atr_id, row.trail)}
-                                >
-                                  <ClipboardList size={14} />
-                                </button>
-                              </div>
+                                  {row.s_rating || 'Medium'}
+                                </span>
+                              </td>
+                              <td>{row.s_dept || '—'}</td>
+                              <td>{row.s_primeResponsibility || '—'}</td>
+                              <td>{row.s_targetDate || '—'}</td>
+                              <td>{row.s_revised_targetDate || '—'}</td>
+                              <td>{row.s_approver || '—'}</td>
+                              <td>{row.role || row.s_role || row.s_role_display || '—'}</td>
+                              <td onClick={(e) => e.stopPropagation()}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm btn-success"
+                                    style={{ padding: '4px 8px', borderRadius: '4px' }}
+                                    title="View ATR Audit Trail"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      get_Atr_trail(row.n_Atr_id, row.trail);
+                                    }}
+                                  >
+                                    <ClipboardList size={14} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={18} className={styles.emptyState}>
+                              No pending ATR records found.
                             </td>
                           </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={18} className={styles.emptyState}>
-                            No pending ATR records found.
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* 2. Completed ATR Table Card */}
-            <div className={styles.card}>
-              <div className={styles.cardBody}>
-                <div className={styles.sectionHeaderRow}>
-                  <div className={styles.badgeCompleted}>
-                    <CheckCircle2 size={16} />
-                    <span>Completed ({filteredCompleted.length})</span>
+            {activeTab === 'completed' && (
+              <div className={styles.card} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+                <div className={styles.cardBody}>
+                  <div className={styles.sectionHeaderRow}>
+                    <div className={styles.badgeCompleted}>
+                      <CheckCircle2 size={16} />
+                      <span>Completed Records ({filteredCompleted.length})</span>
+                    </div>
+
+                    {/* Scroll controls */}
+                    <div className={styles.scrollControls}>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to first row"
+                        onClick={() => scrollToTop(completedTableRef)}
+                      >
+                        <ChevronsUp size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to last row"
+                        onClick={() => scrollToBottom(completedTableRef)}
+                      >
+                        <ChevronsDown size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to first column"
+                        onClick={() => scrollToFirstColumn(completedTableRef)}
+                      >
+                        <ChevronsLeft size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.scrollBtn}
+                        title="Go to last column"
+                        onClick={() => scrollToLastColumn(completedTableRef)}
+                      >
+                        <ChevronsRight size={16} />
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Scroll controls */}
-                  <div className={styles.scrollControls}>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to first row"
-                      onClick={() => scrollToTop(completedTableRef)}
-                    >
-                      <ChevronsUp size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to last row"
-                      onClick={() => scrollToBottom(completedTableRef)}
-                    >
-                      <ChevronsDown size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to first column"
-                      onClick={() => scrollToFirstColumn(completedTableRef)}
-                    >
-                      <ChevronsLeft size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.scrollBtn}
-                      title="Go to last column"
-                      onClick={() => scrollToLastColumn(completedTableRef)}
-                    >
-                      <ChevronsRight size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className={styles.tableResponsive} ref={completedTableRef}>
-                  <table className={styles.atrTable} id="tbl_ATR_completed">
-                    <thead>
-                      <tr>
-                        <th>ATR Trail</th>
-                        <th>Auditing Party Name</th>
-                        <th className={styles.colShort}>Financial Period</th>
-                        <th>Group</th>
-                        <th className={styles.colShort}>Location</th>
-                        <th>Count</th>
-                        <th>Area</th>
-                        <th className={styles.colBroadTheme}>Broad Theme</th>
-                        <th className={styles.colObservation}>Observation</th>
-                        <th className={styles.colActionPlanned}>Action Planned</th>
-                        <th>Rating</th>
-                        <th>Department</th>
-                        <th>Prime Responsibility</th>
-                        <th className={styles.colShort}>Target Date</th>
-                        <th className={styles.colShort}>Revised Target Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredCompleted.length > 0 ? (
-                        filteredCompleted.map((row, idx) => (
-                          <tr key={idx}>
-                            <td>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <button
-                                  type="button"
-                                  className="btn btn-sm btn-success"
-                                  style={{ padding: '4px 8px', borderRadius: '4px' }}
-                                  title="View ATR Audit Trail"
-                                  onClick={() => get_Atr_trail(row.n_Atr_id, row.trail)}
-                                >
-                                  <ClipboardList size={14} />
-                                </button>
-                              </div>
-                            </td>
-                            <td>{row.s_auditing_party_name || '—'}</td>
-                            <td>{row.s_financial_period || '—'}</td>
-                            <td>{row.s_group || '—'}</td>
-                            <td>
-                              <strong>{row.s_location || '—'}</strong>
-                            </td>
-                            <td>{row.n_count ?? '0'}</td>
-                            <td>{row.s_area || '—'}</td>
-                            <td className={styles.colBroadTheme}>{row.s_broadTheme || '—'}</td>
-                            <td className={styles.colObservation}>{row.s_observation || '—'}</td>
-                            <td className={styles.colActionPlanned}>{row.s_actionPlanned || '—'}</td>
-                            <td>
-                              <span
-                                className={
-                                  row.s_rating === 'High'
-                                    ? styles.ratingHigh
-                                    : row.s_rating === 'Low'
-                                    ? styles.ratingLow
-                                    : styles.ratingMedium
-                                }
-                              >
-                                {row.s_rating || 'Low'}
-                              </span>
-                            </td>
-                            <td>{row.s_dept || '—'}</td>
-                            <td>{row.s_primeResponsibility || '—'}</td>
-                            <td>{row.s_targetDate || '—'}</td>
-                            <td>{row.s_revised_targetDate || '—'}</td>
-                          </tr>
-                        ))
-                      ) : (
+                  <div className={styles.tableResponsive} ref={completedTableRef}>
+                    <table className={styles.atrTable} id="tbl_ATR_completed">
+                      <thead>
                         <tr>
-                          <td colSpan={15} className={styles.emptyState}>
-                            No completed ATR records found.
-                          </td>
+                          <th className={styles.colAction}>Action</th>
+                          <th>ATR Trail</th>
+                          <th>Auditing Party Name</th>
+                          <th className={styles.colShort}>Financial Period</th>
+                          <th>Group</th>
+                          <th className={styles.colShort}>Location</th>
+                          <th>Count</th>
+                          <th>Area</th>
+                          <th className={styles.colBroadTheme}>Broad Theme</th>
+                          <th className={styles.colObservation}>Observation</th>
+                          <th className={styles.colActionPlanned}>Action Planned</th>
+                          <th>Rating</th>
+                          <th>Department</th>
+                          <th>Prime Responsibility</th>
+                          <th className={styles.colShort}>Target Date</th>
+                          <th className={styles.colShort}>Revised Target Date</th>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {filteredCompleted.length > 0 ? (
+                          filteredCompleted.map((row, idx) => (
+                            <tr
+                              key={idx}
+                              className={styles.clickableRow}
+                              onClick={() => handleRowClick(row)}
+                              title="Click row to view complete readable details"
+                            >
+                              <td className={styles.colAction} onClick={(e) => e.stopPropagation()}>
+                                <div className={styles.actionBtnGroup}>
+                                  <button
+                                    type="button"
+                                    className={styles.btnActionView}
+                                    title="View Full Details"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleRowClick(row);
+                                    }}
+                                  >
+                                    <Eye size={14} />
+                                  </button>
+                                </div>
+                              </td>
+                              <td onClick={(e) => e.stopPropagation()}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm btn-success"
+                                    style={{ padding: '4px 8px', borderRadius: '4px' }}
+                                    title="View ATR Audit Trail"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      get_Atr_trail(row.n_Atr_id, row.trail);
+                                    }}
+                                  >
+                                    <ClipboardList size={14} />
+                                  </button>
+                                </div>
+                              </td>
+                              <td>{row.s_auditing_party_name || '—'}</td>
+                              <td>{row.s_financial_period || '—'}</td>
+                              <td>{row.s_group || '—'}</td>
+                              <td>
+                                <strong>{row.s_location || '—'}</strong>
+                              </td>
+                              <td>{row.n_count ?? '0'}</td>
+                              <td>{row.s_area || '—'}</td>
+                              <td className={styles.colBroadTheme}>{row.s_broadTheme || '—'}</td>
+                              <td className={styles.colObservation}>{row.s_observation || '—'}</td>
+                              <td className={styles.colActionPlanned}>{row.s_actionPlanned || '—'}</td>
+                              <td>
+                                <span
+                                  className={
+                                    row.s_rating === 'High'
+                                      ? styles.ratingHigh
+                                      : row.s_rating === 'Low'
+                                      ? styles.ratingLow
+                                      : styles.ratingMedium
+                                  }
+                                >
+                                  {row.s_rating || 'Low'}
+                                </span>
+                              </td>
+                              <td>{row.s_dept || '—'}</td>
+                              <td>{row.s_primeResponsibility || '—'}</td>
+                              <td>{row.s_targetDate || '—'}</td>
+                              <td>{row.s_revised_targetDate || '—'}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={16} className={styles.emptyState}>
+                              No completed ATR records found.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         ) : (
           /* ================= FORM VIEW (ADD / EDIT ATR FORM) ================= */
@@ -1698,6 +1877,15 @@ export default function AtrFormPage() {
         onFileUploaded={(names) => {
           setFormData((prev) => ({ ...prev, attachmentName: names }));
         }}
+      />
+
+      {/* ATR Row Detail Modal (Readable Format) */}
+      <AtrRowDetailModal
+        isOpen={detailModalOpen}
+        onClose={() => setDetailModalOpen(false)}
+        data={selectedDetailRow}
+        onViewTrail={(atrId, trail) => get_Atr_trail(atrId, trail)}
+        onEdit={(atrId) => get_ATR_by_id(atrId)}
       />
 
       {/* Footer */}
