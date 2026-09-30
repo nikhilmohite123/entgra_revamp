@@ -197,7 +197,7 @@ const ACTIVE_MODULES = [
   {
     id: 'wcc',
     name: 'WORK COMPLETION CERTIFICATE',
-    path: '/bpmn/work_complation',
+    path: '/wcc',
     icon: FileText,
     color: '#062B67',
     image: notableEventsNewImg,

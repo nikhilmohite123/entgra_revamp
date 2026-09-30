@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+  background: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.table th {
+  background-color: #001e55;
+  color: #ffffff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 11px 12px;
+  border: 1px solid #002870;
+  white-space: nowrap;
+  letter-spacing: 0.4px;
+}
+
+.table th.greenTh {
+  background-color: #5a8a10;
+  border-color: #48700d;
+}
+
+.table th.redTh {
+  background-color: #c53030;
+  border-color: #9b2c2c;
+}
+
+.table td {
+  padding: 9px 12px;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.table tbody tr:hover {
+  background-color: #f0f4fc;
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badgeInProcess {
+  background: #e6edf8;
+  color: #003c96;
+  border: 1px solid #bfdbfe;
+}
+
+.badgeCompleted {
+  background: #f5fae8;
+  color: #5a8a10;
+  border: 1px solid #dbeeb0;
+}
+
+.badgeDraft {
+  background: #fef9c3;
+  color: #a16207;
+  border: 1px solid #fef08a;
+}
+
+.badgeRejected {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.badgePending {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+/* Action Buttons inside tables */
+.actionsCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btnAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btnAction.trail {
+  background-color: #003c96;
+}
+.btnAction.trail:hover {
+  background-color: #002870;
+  transform: scale(1.05);
+}
+
+.btnAction.edit {
+  background-color: #78aa28;
+}
+.btnAction.edit:hover {
+  background-color: #5a8a10;
+  transform: scale(1.05);
+}
+
+.btnAction.delete {
+  background-color: #e53e3e;
+}
+.btnAction.delete:hover {
+  background-color: #c53030;
+  transform: scale(1.05);
+}
+
+.btnAction.view {
+  background-color: #001e55;
+}
+.btnAction.view:hover {
+  background-color: #003c96;
+  transform: scale(1.05);
+}
+
+.btnAction.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #94a3b8;
+}
+
+/* Pagination / Table Footer */
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.25rem 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: inherit;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtn.active {
+  background: #003c96;
+  color: #ffffff;
+  border-color: #003c96;
+}
+
+/* Table Inputs */
+.tableInput {
+  width: 100%;
+  min-width: 90px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.tableInput:focus {
+  border-color: #003c96;
+  box-shadow: 0 0 0 2px rgba(0, 60, 150, 0.15);
+}
+
+.tableTextarea {
+  width: 100%;
+  min-width: 130px;
+  height: 48px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.tableTextarea:focus {
+  border-color: #003c96;
+  box-shadow: 0 0 0 2px rgba(0, 60, 150, 0.15);
+}
+
+.totalRow {
+  background: #f8fafc;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.totalAmountHighlight {
+  color: #003c96;
+  font-weight: 800;
+}

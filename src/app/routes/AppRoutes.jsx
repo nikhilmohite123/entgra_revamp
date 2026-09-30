@@ -6,12 +6,12 @@ import AuthLayout from '../../layouts/AuthLayout';
 import Login from '../../pages/Login';
 import Main from '../../pages/main';
 
-// Import only existing module routes
-
+// Import module routes
 import { IdeahubRoutes } from '../../modules/idea-hub';
 import { NpdRoutes } from '../../modules/NPD TOOL';
 import { OvertimeRoutes } from '../../modules/Overtime';
 import { AtrRoutes } from '../../modules/ATR';
+import { WccRoutes } from '../../modules/WCC';
 
 // Protected Route checks localStorage validation
 function ProtectedRoute() {
@@ -36,8 +36,16 @@ export default function AppRoutes() {
         {/* Standalone Modules (Dedicated Layout & Portal Views) */}
         <Route path="/idea_hub/*" element={<IdeahubRoutes />} />
         <Route path="/npd_tool/*" element={<NpdRoutes />} />
-        <Route path="overtime/*" element={<OvertimeRoutes />} />
+        <Route path="/overtime/*" element={<OvertimeRoutes />} />
         <Route path="/atr/*" element={<AtrRoutes />} />
+        <Route path="/wcc/*" element={<WccRoutes />} />
+
+        {/* Backward-Compatible Redirects for Legacy / Direct WCC URLs */}
+        <Route path="/work_complation" element={<Navigate to="/wcc" replace />} />
+        <Route path="/bpmn/work_complation" element={<Navigate to="/wcc" replace />} />
+        <Route path="/wcc_dash" element={<Navigate to="/wcc/wcc_dash" replace />} />
+        <Route path="/wcc_data_export" element={<Navigate to="/wcc/wcc_data_export" replace />} />
+        <Route path="/workcompletion/*" element={<Navigate to="/wcc" replace />} />
 
         {/* Backward-Compatible Redirects for Legacy / Direct ATR URLs */}
         <Route path="/bpmn/dashboard" element={<Navigate to="/atr" replace />} />
@@ -75,8 +83,7 @@ export default function AppRoutes() {
         <Route path="/bpmn/idea-hub" element={<Navigate to="/idea_hub" replace />} />
         <Route path="/idea-hub/*" element={<Navigate to="/idea_hub" replace />} />
 
-
-          {/* Backward-Compatible Redirects for Legacy / Direct Overtime URLs */}
+        {/* Backward-Compatible Redirects for Legacy / Direct Overtime URLs */}
         <Route path="/ot_main" element={<Navigate to="/overtime" replace />} />
         <Route path="/bpmn/ot_main" element={<Navigate to="/overtime" replace />} />
         <Route path="/ot_requisition" element={<Navigate to="/overtime/requisition" replace />} />
@@ -97,11 +104,11 @@ export default function AppRoutes() {
         {/* Main Layout Wrapping Modules */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/main" replace />} />
-         
           <Route path="idea_hub/*" element={<IdeahubRoutes />} />
           <Route path="npd_tool/*" element={<NpdRoutes />} />
-            <Route path="overtime/*" element={<OvertimeRoutes />} />
+          <Route path="overtime/*" element={<OvertimeRoutes />} />
           <Route path="atr/*" element={<AtrRoutes />} />
+          <Route path="wcc/*" element={<WccRoutes />} />
         </Route>
       </Route>
 

@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+.pageWrapper {
+  min-height: calc(100vh - 68px);
+  background-color: #f8fafc;
+  padding: 1.5rem 2rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.formCard {
+  max-width: 1500px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 30, 85, 0.05);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.formHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #edf2f7;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.formTitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #003c96;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.3px;
+}
+
+.sectionBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: #fcfdfe;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.sectionHeader {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #003c96;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 4px solid #78aa28;
+  padding-left: 10px;
+  margin-bottom: 0.5rem;
+}
+
+/* Grids */
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.grid1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.required {
+  color: #e53e3e;
+  font-weight: 700;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  border-color: #003c96;
+  box-shadow: 0 0 0 2px rgba(0, 60, 150, 0.15);
+}
+
+.input:disabled, .select:disabled, .textarea:disabled {
+  background-color: #f1f5f9;
+  color: #64748b;
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+}
+
+.textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* Custom Radio Group */
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.radioLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 18px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.radioInput {
+  display: none;
+}
+
+.radioInput:checked + .radioLabel {
+  background-color: #003c96;
+  color: #ffffff;
+  border-color: #003c96;
+  box-shadow: 0 2px 8px rgba(0, 60, 150, 0.25);
+}
+
+.radioLabel:hover {
+  border-color: #003c96;
+}
+
+/* Conditional Group Box */
+.conditionalBox {
+  margin-top: 10px;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Attachment Display Pills */
+.attachmentPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #e6edf8;
+  border: 1px solid #bfdbfe;
+  font-size: 0.8rem;
+  color: #003c96;
+  text-decoration: none;
+  font-weight: 500;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.attachmentPill a {
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attachmentPill a:hover {
+  text-decoration: underline;
+}
+
+.deleteAttachmentBtn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.deleteAttachmentBtn:hover {
+  background: #fee2e2;
+}
+
+/* Action Bar */
+.formActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 2px solid #edf2f7;
+}
+
+.btnAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btnAction:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btnAction:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btnDraft {
+  background-color: #475569;
+  color: #ffffff;
+}
+
+.btnSubmit {
+  background-color: #78aa28;
+  color: #ffffff;
+}
+
+.btnSubmit:hover:not(:disabled) {
+  background-color: #5a8a10;
+}
+
+.btnReject {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.btnReturn {
+  background-color: #d97706;
+  color: #ffffff;
+}
+
+.btnForward {
+  background-color: #003c96;
+  color: #ffffff;
+}
+
+.btnForward:hover:not(:disabled) {
+  background-color: #002870;
+}
+
+.btnPdf {
+  background-color: #6366f1;
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .grid3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 1rem;
+  }
+  .formCard {
+    padding: 1.2rem;
+  }
+  .grid3, .grid2 {
+    grid-template-columns: 1fr;
+  }
+  .formActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btnAction {
+    width: 100%;
+    justify-content: center;
+  }
+}

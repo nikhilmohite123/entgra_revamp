@@ -1,6 +1,6 @@
 // Export all static image assets for clean central importing
 import atrPortalImg from './Atr_portal.png';
-import checklistPanaImg from './Checklist-pana.png';
+import   checklistPanaImg from './wcc.png';
 import hmpImg from './Hmp.png';
 import socialDashboardBroImg from './Social Dashboard-bro.png';
 import spreadsheetsBroImg from './Spreadsheets-bro.png';
